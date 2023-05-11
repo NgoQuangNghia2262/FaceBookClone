@@ -11,5 +11,6 @@ router.get("/waslike", PostController.getUserLike);
 router.post("/add/like", PostController.AddLike);
 router.post("/delete/like", PostController.DeleteLike);
 router.post("/upload_img", PostController.UpLoadImg);
+router.post("/createpost", PostController.CreatePost);
 
 module.exports = router;

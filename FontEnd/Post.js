@@ -20,7 +20,7 @@ async function getData(callback, coursAPI) {
       callback(res);
     });
 }
-async function fetchData(coursAPI, data) {
+async function fetchData(coursAPI) {
   try {
     const response = await fetch(coursAPI);
     const data = await response.json();

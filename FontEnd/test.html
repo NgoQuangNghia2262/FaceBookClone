@@ -11,18 +11,42 @@
     <input type="file" name="file" />
     <button type="button">Upload</button>
     <script>
+      async function fetchData(coursAPI, dt) {
+        try {
+          const response = await fetch(coursAPI, dt);
+          const data = await response.json();
+          return data;
+        } catch (error) {
+          console.error(error);
+        }
+      }
       const input = document.querySelector('input[type="file"]');
       const button = document.querySelector("button");
 
-      button.addEventListener("click", () => {
+      button.addEventListener("click", async () => {
         event.preventDefault();
         const formData = new FormData();
         formData.append("file", input.files[0]);
-        fetch("http://localhost:8000/data/api/post/upload_img", {
-          method: "POST",
-          body: formData,
-        });
-        console.log("end");
+        const data = await fetchData(
+          "http://localhost:8000/data/api/post/upload_img",
+          {
+            method: "POST",
+            body: formData,
+          }
+        );
+        const data2 = await fetchData(
+          "http://localhost:8000/data/api/post/createpost",
+          {
+            method: "POST",
+            body: {
+              test: data,
+            },
+          }
+        );
+        console.log(data);
+        console.log(data2);
+        debugger;
+        console.log("aaaa");
       });
     </script>
   </body>

@@ -2,6 +2,7 @@ const { ExcuteQuery } = require("../DataBase/Database");
 const formidable = require("formidable");
 const fs = require("fs");
 const path = require("path");
+const fse = require("fs-extra");
 
 const PostController = {
   getTwoPost: async (req, res) => {
@@ -82,7 +83,7 @@ const PostController = {
   UpLoadImg: async (req, res) => {
     const form = formidable({ multiples: false });
 
-    form.parse(req, (err, fields, files) => {
+    form.parse(req, async (err, fields, files) => {
       if (err) {
         console.error(err);
         res.status(500).send(err);
@@ -91,24 +92,30 @@ const PostController = {
       const file = files.file;
       const tempFilePath = file.filepath;
       const targetDir = path.join(path.dirname(__dirname), "public", "images");
-
-      //lưu file
       if (!fs.existsSync(targetDir)) {
         fs.mkdirSync(targetDir, { recursive: true });
       }
       const targetFilePath = path.join(targetDir, file.originalFilename);
-      // Đọc file từ đường dẫn tạm thời
-      fs.readFile(tempFilePath, (err, data) => {
+      fs.readFile(tempFilePath, async (err, data) => {
         if (err) throw err;
-        // Ghi file vào thư mục đích
         fs.writeFile(targetFilePath, data, (err) => {
           if (err) throw err;
           console.log("File saved successfully");
         });
+        res.send(
+          JSON.stringify("../BackEnd/public/images/" + file.originalFilename)
+        );
       });
-
-      res.send(JSON.stringify("aaa"));
     });
+  },
+  CreatePost: async (req, res) => {
+    try {
+      const query = `insert into tbLike values('${req.body.test}')`;
+      console.log(query);
+      res.send(JSON.stringify("create success !!!"));
+    } catch (err) {
+      res.send(err);
+    }
   },
 };
 module.exports = PostController;

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <input type="text" name="title" />
+    <input type="file" name="file" />
+    <button type="button">Upload</button>
+    <script>
+      const input = document.querySelector('input[type="file"]');
+      const button = document.querySelector("button");
+
+      button.addEventListener("click", () => {
+        event.preventDefault();
+        const formData = new FormData();
+        formData.append("file", input.files[0]);
+        fetch("http://localhost:8000/data/api/post/upload_img", {
+          method: "POST",
+          body: formData,
+        });
+        console.log("end");
+      });
+    </script>
+  </body>
+</html>

@@ -4,50 +4,74 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="test.css" />
     <title>Document</title>
   </head>
   <body>
-    <input type="text" name="title" />
-    <input type="file" name="file" />
-    <button type="button">Upload</button>
+    <h1>Đây là một trang HTML với button</h1>
+    <button>Thêm div</button>
+    <div id="parentElementId">
+      <!-- Đây là nơi mà thẻ div mới sẽ được thêm vào -->
+      <div class="aaa"></div>
+    </div>
+
     <script>
-      async function fetchData(coursAPI, dt) {
+      var coursAPI = "http://localhost:8000/Profile/findone?id=1";
+      async function fetchData(coursAPI, data) {
         try {
-          const response = await fetch(coursAPI, dt);
-          const data = await response.json();
-          return data;
+          const response = await fetch(coursAPI, data);
+
+          const result = await response.json();
+
+          return result;
         } catch (error) {
           console.error(error);
         }
       }
-      const input = document.querySelector('input[type="file"]');
-      const button = document.querySelector("button");
-
-      button.addEventListener("click", async () => {
-        event.preventDefault();
-        const formData = new FormData();
-        formData.append("file", input.files[0]);
-        const data = await fetchData(
-          "http://localhost:8000/data/api/post/upload_img",
-          {
-            method: "POST",
-            body: formData,
-          }
-        );
-        const data2 = await fetchData(
-          "http://localhost:8000/data/api/post/createpost",
-          {
-            method: "POST",
-            body: {
-              test: data,
-            },
-          }
-        );
-        console.log(data);
-        console.log(data2);
-        debugger;
-        console.log("aaaa");
-      });
+      function TaoPhanDau() {
+        return "Đầu";
+      }
+      function TaoPhanGiua() {
+        return "Giữa";
+      }
+      async function TaoPhanCuoi() {
+        let data = await fetchData(coursAPI);
+        let data1 = await fetchData(coursAPI);
+        let data2 = await fetchData(coursAPI);
+        let data3 = await fetchData(coursAPI);
+        return "Cuối";
+      }
+      function LoadBaiViet(arr) {
+        const promises = arr.map((element) => TaoBaiViet(element));
+        return Promise.all(promises)
+          .then((data) => {
+            return data;
+          })
+          .catch((error) => {
+            console.error(error);
+            throw error;
+          });
+      }
+      async function LoadBaiViet2(array) {
+        for (let index = 0; index < array.length; index++) {
+          let data = await TaoBaiViet(array[index]);
+          console.log(data);
+        }
+      }
+      function TaoBaiViet(num) {
+        return new Promise(async (resolve, reject) => {
+          let cuoi = await TaoPhanCuoi();
+          let baiviet = TaoPhanDau() + TaoPhanGiua() + cuoi;
+          resolve(baiviet + num);
+        });
+      }
+      async function Start() {
+        console.log("Start");
+        let array = [1, 2, 3];
+        await LoadBaiViet2([1, 2, 3]);
+        console.log("End");
+      }
+      Start();
     </script>
   </body>
 </html>

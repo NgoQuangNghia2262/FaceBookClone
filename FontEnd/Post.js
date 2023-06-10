@@ -1,5 +1,41 @@
 var username = localStorage.getItem("username");
 
+function asd() {
+  var FormCreatePost_Content_UpLoad_Input = document.querySelector(
+    ".FormCreatePost_Content_UpLoad input"
+  );
+  var FormCreatePost_Button = document.querySelector("#FormCreatePost_Button");
+  FormCreatePost_Button.addEventListener("click", () => {
+    const FormCreatePost_Button_Now = document.querySelector(
+      ".activate#FormCreatePost_Button"
+    );
+    FormCreatePost_Button_Now.addEventListener("click", async () => {
+      const formData = new FormData();
+      formData.append("", FormCreatePost_Content_UpLoad_Input.files[0]);
+
+      const pathimg = await fetchData(
+        "http://localhost:8000/data/api/post/upload_img",
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
+      const data = {
+        UserID: localStorage.getItem("username"),
+        pathimg: pathimg,
+        content: textareaFormCreatePost.value,
+        category: "Post",
+      };
+      fetchData("http://localhost:8000/data/api/post/createpost", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+    });
+  });
+}
 function BlurFor_header_search_input() {
   var element = document.querySelector("#header_search_input");
   var history = document.querySelector(".HistorySearch");
@@ -10,7 +46,18 @@ function BlurFor_header_search_input() {
     history.classList.remove("displaynone");
   });
 }
-
+function promiseLoadData(callback) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      if (true) {
+        callback;
+        resolve("Thành công");
+      } else {
+        reject("Thất bại");
+      }
+    }, 5000);
+  });
+}
 async function getData(callback, coursAPI) {
   fetch(coursAPI)
     .then(function (res) {
@@ -20,19 +67,28 @@ async function getData(callback, coursAPI) {
       callback(res);
     });
 }
-async function fetchData(coursAPI) {
+async function fetchData(coursAPI, data) {
   try {
-    const response = await fetch(coursAPI);
-    const data = await response.json();
-
-    return data;
+    const response = await fetch(coursAPI, data);
+    const result = await response.json();
+    return result;
   } catch (error) {
     console.error(error);
   }
 }
+function delay(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
 
 async function loadPostItem(posts) {
-  posts.forEach(async (post) => {
+  if (!posts) {
+    return;
+  }
+  var preload = document.querySelector("#ListPost_PreLoad");
+  preload.style.display = "block";
+  await delay(2000);
+  for (let index = 0; index < posts.length; index++) {
+    const post = posts[index];
     var user = await fetchData(
       `http://localhost:8000/Profile/findone?id=${post.ProfileID}`
     );
@@ -43,7 +99,7 @@ async function loadPostItem(posts) {
     newElement.className = "Post-Item";
     newElement.innerHTML = postItem;
     root.appendChild(newElement);
-  });
+  }
 }
 
 function TopItem(userProfile) {
@@ -89,18 +145,18 @@ function CenterItem(post) {
   </div>
 </div>`;
 }
-
 function clickLike(elementLike, obj) {
+  console.log(elementLike);
   const data = {
     postId: obj.postId,
     userId: obj.userId,
   };
   var parentElement = elementLike.parentNode.parentNode.firstElementChild;
-  var element = parentElement.children[0].children[1];
+  var element = parentElement.firstElementChild.children[1];
   var like = element.innerHTML.trim();
   if (elementLike.className === "activateLike") {
     elementLike.className = "Like";
-    element.textContent = --like;
+    element.textContent = like === 1 ? "" : --like;
     fetch("http://localhost:8000/data/api/post/delete/like", {
       method: "POST",
       headers: {
@@ -117,11 +173,9 @@ function clickLike(elementLike, obj) {
       body: JSON.stringify(data),
     });
     elementLike.className = "activateLike";
-    element.textContent = ++like;
+    element.textContent = like === 0 ? 1 : ++like;
   }
-  console.log(data);
 }
-
 async function BotItem(post) {
   const like = await fetchData(
     `http://localhost:8000/data/api/post/countLike/${post.Id}`
@@ -135,13 +189,13 @@ async function BotItem(post) {
   const wasLike = await fetchData(
     `http://localhost:8000/data/api/post/waslike/?postId=${post.Id}&userId=${username}`
   );
-  console.log(wasLike);
   return ` <div class="Post-Item-Bot">
   <div class="Post-Item-Bot_Container">
     <div class="Header">
       <div class="Header_Left">
         <img src="./images/like.svg" alt="" />
-        ${like[0].countLike ? `<span">${like[0].countLike}</span>` : ``}
+        <span> ${like[0].countLike ? `${like[0].countLike}` : ``}</span>
+       
       </div>
       <div class="Header_Right">
         ${
@@ -197,6 +251,7 @@ async function BotItem(post) {
   </div>
 </div>`;
 }
+
 function Load(userProfile) {
   var img = document.querySelector("#AnhDaiDien");
   var img2 = document.querySelector("#AnhDaiDien2");
@@ -214,6 +269,7 @@ function Load(userProfile) {
   elementname.textContent = userProfile[0].Name;
   elementInputCreatePost.placeholder = `${userProfile[0].Name} ơi , Bạn đang nghĩ gì thế ?`;
 }
+
 function LoadFriend(friends) {
   var root = document.querySelector("#list-friend");
   friends.forEach((friend) => {
@@ -226,32 +282,51 @@ function LoadFriend(friends) {
     root.appendChild(newElement);
   });
 }
-async function LoadPost(Posts) {
-  var profile = new Profile();
-  var content = profile.getName();
-  console.log(content);
-}
-function Start() {
+async function Start() {
   BlurFor_header_search_input();
-  getData(LoadFriend, `http://localhost:8000/friendship?id=${username}`);
-  getData(Load, `http://localhost:8000/Profile/findone?id=${username}`);
-  getData(loadPostItem, `http://localhost:8000/data/api/post/trang?id=0`);
+  let friends = await fetchData(
+    `http://localhost:8000/friendship?id=${username}`
+  );
+  LoadFriend(friends);
+  let userProfile = await fetchData(
+    `http://localhost:8000/Profile/findone?id=${username}`
+  );
+  Load(userProfile);
+  let posts = await fetchData(`http://localhost:8000/data/api/post/trang?id=0`);
+  loadPostItem(posts)
+    .then()
+    .catch()
+    .finally(() => {
+      var preload = document.querySelector("#ListPost_PreLoad");
+      preload.style.display = "none";
+    });
 }
 Start();
-var trang = 1;
-window.addEventListener("scroll", function () {
+let trang = 1;
+window.addEventListener("scroll", async function () {
   // Kiểm tra khi nào người dùng kéo đến cuối trang
   if (window.innerHeight + window.pageYOffset >= document.body.offsetHeight) {
-    loadMorePosts(trang);
+    var preload = document.querySelector("#ListPost_PreLoad");
+    preload.style.display = "none";
+    await loadMorePosts(trang);
     trang++;
   }
 });
 
-function loadMorePosts(trang) {
-  setTimeout(() => {
-    getData(
-      loadPostItem,
-      `http://localhost:8000/data/api/post/trang?id=${trang}`
-    );
-  }, 2000);
+async function loadMorePosts(trang) {
+  console.log(trang);
+  let posts = await fetchData(
+    `http://localhost:8000/data/api/post/trang?id=${trang}`
+  );
+
+  if (!posts) {
+    return;
+  }
+  loadPostItem(posts)
+    .then()
+    .catch()
+    .finally(() => {
+      let preload = document.querySelector("#ListPost_PreLoad");
+      preload.style.display = "none";
+    });
 }

@@ -2,7 +2,6 @@ const { ExcuteQuery } = require("../DataBase/Database");
 const formidable = require("formidable");
 const fs = require("fs");
 const path = require("path");
-const fse = require("fs-extra");
 
 const PostController = {
   getTwoPost: async (req, res) => {
@@ -24,7 +23,7 @@ const PostController = {
       const countLike = await ExcuteQuery(
         `select count(*) as countLike from tbLike where PostId = ${req.params.Id}`
       );
-      res.send(countLike);
+      res.status(200).send(countLike);
     } catch (err) {
       res.status(500).json(err);
     }
@@ -34,7 +33,7 @@ const PostController = {
       const countComment = await ExcuteQuery(
         `select count(*) as countComment from CommentShare where PostId = ${req.params.Id} and category = N'comment'`
       );
-      res.send(countComment);
+      res.status(200).send(countComment);
     } catch (err) {
       res.status(500).json(err);
     }
@@ -44,7 +43,7 @@ const PostController = {
       const countShare = await ExcuteQuery(
         `select count(*) as countShare from CommentShare where PostId = ${req.params.Id} and category = N'share'`
       );
-      res.send(countShare);
+      res.status(200).send(countShare);
     } catch (err) {
       res.status(500).json(err);
     }
@@ -81,7 +80,12 @@ const PostController = {
     }
   },
   UpLoadImg: async (req, res) => {
-    const form = formidable({ multiples: false });
+    console.log("start");
+    const form = new formidable.IncomingForm();
+    form.uploadDir = "public/images";
+    form.keepExtensions = true;
+    form.maxFieldsSize = 10 * 1024 * 1024;
+    form.multiples = false;
 
     form.parse(req, async (err, fields, files) => {
       if (err) {
@@ -89,7 +93,11 @@ const PostController = {
         res.status(500).send(err);
         return;
       }
-      const file = files.file;
+      const file = files[""];
+      console.log(file);
+      if (typeof file === "undefined") {
+        res.status(200).send("");
+      }
       const tempFilePath = file.filepath;
       const targetDir = path.join(path.dirname(__dirname), "public", "images");
       if (!fs.existsSync(targetDir)) {
@@ -100,21 +108,24 @@ const PostController = {
         if (err) throw err;
         fs.writeFile(targetFilePath, data, (err) => {
           if (err) throw err;
-          console.log("File saved successfully");
+          console.log("File save success !!!");
         });
-        res.send(
-          JSON.stringify("../BackEnd/public/images/" + file.originalFilename)
-        );
+        res
+          .status(200)
+          .send(
+            JSON.stringify("../BackEnd/public/images/" + file.originalFilename)
+          );
       });
     });
   },
   CreatePost: async (req, res) => {
     try {
-      const query = `insert into tbLike values('${req.body.test}')`;
-      console.log(query);
-      res.send(JSON.stringify("create success !!!"));
+      console.log(req.body);
+      const query = `insert into Post values ('${req.body.UserID}' , N'${req.body.content}' , '${req.body.pathimg}' , getdate(),N'Post')`;
+      await ExcuteQuery(query);
+      res.status(200).send(JSON.stringify("create success !!!"));
     } catch (err) {
-      res.send(err);
+      res.status(500).send(err);
     }
   },
 };

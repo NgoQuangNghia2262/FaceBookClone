@@ -13,7 +13,10 @@ app.use(bodyparser.json({ limit: "50mb" }));
 app.use("/Profile", routerProfile);
 app.use("/friendship", routerFriendShip);
 app.use("/data/api/post", routerPost);
-
+app.get("/test", (req, res) => {
+  const jsResult = JSON.stringify("Hello World");
+  res.send(jsResult);
+});
 app.listen(8000, () => {
   console.log("server is running !!!");
 });

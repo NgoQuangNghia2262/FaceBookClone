@@ -5,7 +5,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Facebook</title>
-
     <link rel="stylesheet" href="Post.css" />
     <link
       rel="shortcut icon"
@@ -189,7 +188,7 @@
           <div class="Account_CaNhan displaynone">
             <div class="header_Account_CaNhan">
               <div class="header_Account_CaNhan-item1">
-                <img id="AnhDaiDien3" src="../BackEnd/public/images/filename.png" alt="" />
+                <img id="AnhDaiDien3" src="./images/anh-dai-dien-chibi-cute_104205129.jpg" alt="" />
                 <span>Nghĩa Nghĩa</span>
               </div>
               <div class="header_Account_CaNhan-item2">
@@ -625,7 +624,32 @@
           <span>Tạo phòng họp mặt</span>
         </div>
       </div>
-      <div class="ListPost" id="ListPost" style="width: 100%"></div>
+      <div class="ListPost" id="ListPost" style="width: 100%">
+        
+      </div>
+      <div class="ListPost_PreLoad displaynone" id="ListPost_PreLoad">
+        <div class="Post-Item-Top">
+          <div style="display: flex;  ">
+            <div class="animation_preload" style="margin-right: 10px; opacity: 0.25;width: 40px;height: 40px;border-radius: 50%;">
+            </div>
+            <div>
+              <div class="animation_preload" style="border-radius: 5px; width: 88px;height: 8px;margin-top: 5px;animation-delay: 0.5s;"></div>
+              <div class="animation_preload" style="border-radius: 5px; width: 68px;height: 8px;margin-top: 5px; animation-delay: 0.5s;"></div>
+
+            </div>
+          </div>
+        </div>
+        <div style="width: 100%;" class="Post-Item-center">
+          <div style="width: 100%;height: 180px;"></div>
+        </div>
+        <div style="width: 100%; padding-bottom: 7px;" class="Post-Item-bot">
+          <div style="width: 100%;height: 20px;display: flex;justify-content: space-around;">
+            <div class="animation_preload" style="border-radius: 5px; width: 66px;height: 8px;margin-top: 5px;animation-delay: 0.2s;"></div>
+            <div class="animation_preload" style="border-radius: 5px; width: 66px;height: 8px;margin-top: 5px;animation-delay: 0.4s;"></div>
+            <div class="animation_preload" style="border-radius: 5px; width: 66px;height: 8px;margin-top: 5px;animation-delay: 0.6s;"></div>
+          </div>
+        </div>
+      </div>
     </main>
     <nav class="WebContent Right">
       <div class="Container_Right">
@@ -733,7 +757,7 @@
         </div>
       </div>
     </nav>
-    <form action="">
+    
       <div class="overlay displaynone">
         <div class="FormTaoPost">
           <div
@@ -806,9 +830,9 @@
              <div class="FormCreatePost_Content_UpLoad displaynone">
               <div class="FormCreatePost_Content_UpLoad-Top">
                 <img src="" alt="">
-                <input type="file" name="fileUpload">
+                <input type="file" name="file">
                 <div class="UpLoad-Top-icon" >
-                  <i data-visualcompletion="css-img" class="x1b0d499 xep6ejk" style="background-image: url(&quot;https://static.xx.fbcdn.net/rsrc.php/v3/yf/r/S2RzBqcwbI-.png&quot;); background-position: 0px -86px; background-size: 38px 162px; width: 20px; height: 20px; background-repeat: no-repeat; display: inline-block;"></i>
+                  <i style="background-image: url(&quot;https://static.xx.fbcdn.net/rsrc.php/v3/yf/r/S2RzBqcwbI-.png&quot;); background-position: 0px -86px; background-size: 38px 162px; width: 20px; height: 20px; background-repeat: no-repeat; display: inline-block;"></i>
                 </div>
                 <h3>Thêm ảnh/Video</h3>
                 <span>hoặc kéo và thả</span>
@@ -838,6 +862,7 @@
             FormCreatePost_Content_UpLoad.classList.add("displaynone");
           });
         </script>
+        
         <div>
           <div 
           style="display: flex;justify-content: space-around;align-items: center;border: 1px solid #CED0D4;height: 57px;border-radius: 8px;box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);">
@@ -853,10 +878,10 @@
           </div>
         </div>
         <div id="FormCreatePost_Button" class="nonactivate" style="width: 100%;display: flex;justify-content: center;align-items: center;">
-          <button >Đăng</button>
+          <button type="button">Đăng</button>
         </div>
       </div>
-    </form>
+    
     <script>
       /*
         Tạo sự kiện click cho thẻ input tại CratePost
@@ -864,8 +889,11 @@
         Tạo sự kiện click cho dấu X tại FormCratePost
           +Khi click thì thêm class displaynone của  form .overlay (class displaynone giúp ẩn element)
       */
+      var FormCreatePost_Button = document.querySelector("#FormCreatePost_Button");
+      var upload = document.querySelector("img.upload");
+      var textareaFormCreatePost = document.querySelector(".FormCreatePost_Content textarea");
       var createPost = document.querySelector(".CratePost .CratePost_Top input");
-      var elementoverlay = document.querySelector("form .overlay");
+      var elementoverlay = document.querySelector(".overlay");
       var closeFormTaoPost = document.querySelector(".close_FormTaoPost");
       createPost.addEventListener("click", function () {
         elementoverlay.classList.remove("displaynone");
@@ -878,20 +906,22 @@
               (Không cho user ấn đăng bài khi chưa nhập gì)
           + ngược lại thì gán cho class activate
       */
-      var FormCreatePost_Button = document.querySelector("#FormCreatePost_Button");
-       var textareaFormCreatePost = document.querySelector(".FormCreatePost_Content textarea");
+      
       textareaFormCreatePost.addEventListener("input", function() {
         if(textareaFormCreatePost.value){
           FormCreatePost_Button.className = "activate";
         }
-        else{FormCreatePost_Button.className = "nonactivate";}
+        else{
+          FormCreatePost_Button.className = "nonactivate";
+      }
       });
-      var upload = document.querySelector("img.upload");
       upload.addEventListener("click" , () =>{
         FormCreatePost_Content_UpLoad.classList.remove("displaynone");
       });
-    </script>
-    <script src="./Profile.js"></script>
-    <script src="./Post.js"></script>
+
+      
+    </script> 
+    <script src="./DTO/Post.js"></script>
+    <script src="./FormPost.js"></script>
   </body>
 </html>

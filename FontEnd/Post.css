@@ -716,3 +716,33 @@ body .FormTaoPost .FormCreatePost_Content{
         width: 55%;
     }
 }
+.ListPost_PreLoad{
+    margin-bottom: 20px;
+     background-color: #fff;
+     width: 100%;
+      border-radius: 10px;
+     box-shadow: 0px 1px 6px rgba(0, 0, 0, 0.2);
+}
+.animation_preload{
+    background-color: #E4E6EB;
+    animation: preload 1.75s ease-out infinite;
+    animation-delay: 0ms;
+}
+@keyframes preload {
+      
+    0% {
+        opacity: 0.75;
+      }
+      25%{
+        opacity: 0.5;
+      }
+      50% {
+        opacity: 0.25;
+      }
+      75%{
+        opacity: 0.5;
+      }
+      100% {
+        opacity: 0.75;
+      }
+}

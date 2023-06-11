@@ -80,7 +80,6 @@ const PostController = {
     }
   },
   UpLoadImg: async (req, res) => {
-    console.log("start");
     const form = new formidable.IncomingForm();
     form.uploadDir = "public/images";
     form.keepExtensions = true;
@@ -94,7 +93,6 @@ const PostController = {
         return;
       }
       const file = files[""];
-      console.log(file);
       if (typeof file === "undefined") {
         res.status(200).send("");
       }

@@ -6,15 +6,16 @@ const FriendShipController = {
       const query = `
         SELECT Name , Img
         FROM UserProfile
-        INNER JOIN Friendship ON UserProfile.Id = Friendship.ProfileID2
-        WHERE Friendship.ProfileID1 = '${req.query.id}' AND Friendship.Relationship = N'Bạn Bè'
+        INNER JOIN Friendship ON UserProfile.Phone = Friendship.ProfileID2
+        WHERE Friendship.ProfileID1 = '${req.query.id}' AND Friendship.Relationship = 'Friend'
 
         UNION
 
         SELECT Name , Img
         FROM UserProfile
-        INNER JOIN Friendship ON UserProfile.Id = Friendship.ProfileID1
-        WHERE Friendship.ProfileID2 = '${req.query.id}' AND Friendship.Relationship = N'Bạn Bè';
+        INNER JOIN Friendship ON UserProfile.Phone = Friendship.ProfileID1
+        WHERE Friendship.ProfileID2 = '${req.query.id}' AND Friendship.Relationship = 'Friend';
+
       `;
       const result = await ExcuteQuery(query);
       res.send(result);

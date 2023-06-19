@@ -25,10 +25,12 @@ async function ExcuteQuery(query) {
     await pool.connect();
     const result = await pool.request().query(query);
     const jsResult = JSON.stringify(result.recordset);
-    await pool.close();
     return jsResult;
   } catch (err) {
+    console.log(err);
     throw err;
+  } finally {
+    await pool.close();
   }
 }
 

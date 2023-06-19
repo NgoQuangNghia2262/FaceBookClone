@@ -1,40 +1,13 @@
 var username = localStorage.getItem("username");
 
-function asd() {
-  var FormCreatePost_Content_UpLoad_Input = document.querySelector(
-    ".FormCreatePost_Content_UpLoad input"
-  );
-  var FormCreatePost_Button = document.querySelector("#FormCreatePost_Button");
-  FormCreatePost_Button.addEventListener("click", () => {
-    const FormCreatePost_Button_Now = document.querySelector(
-      ".activate#FormCreatePost_Button"
-    );
-    FormCreatePost_Button_Now.addEventListener("click", async () => {
-      const formData = new FormData();
-      formData.append("", FormCreatePost_Content_UpLoad_Input.files[0]);
-
-      const pathimg = await fetchData(
-        "http://localhost:8000/data/api/post/upload_img",
-        {
-          method: "POST",
-          body: formData,
-        }
-      );
-      const data = {
-        UserID: localStorage.getItem("username"),
-        pathimg: pathimg,
-        content: textareaFormCreatePost.value,
-        category: "Post",
-      };
-      fetchData("http://localhost:8000/data/api/post/createpost", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
-    });
-  });
+async function fetchData(coursAPI, data) {
+  try {
+    const response = await fetch(coursAPI, data);
+    const result = await response.json();
+    return result;
+  } catch (error) {
+    console.log(error);
+  }
 }
 function BlurFor_header_search_input() {
   var element = document.querySelector("#header_search_input");
@@ -95,73 +68,55 @@ async function CenterItem(post) {
   </div>
 </div>`;
 }
-function clickLike(elementLike, obj) {
-  const data = {
-    postId: obj.postId,
-    userId: obj.userId,
-  };
-  var parentElement = elementLike.parentNode.parentNode.firstElementChild;
-  var element = parentElement.firstElementChild.children[1];
-  var like = element.innerHTML.trim();
-  if (elementLike.className === "activateLike") {
-    elementLike.className = "Like";
-    element.textContent = like === 1 ? "" : --like;
-    fetch("http://localhost:8000/data/api/post/delete/like", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
-  } else {
-    fetch("http://localhost:8000/data/api/post/add/like", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
-    elementLike.className = "activateLike";
-    element.textContent = like === 0 ? 1 : ++like;
-  }
+function clickLike(elementLike) {
+  console.log("Hi");
+  // var parentElement = elementLike.parentNode.parentNode.firstElementChild;
+  // var element = parentElement.firstElementChild.children[1];
+  // var like = element.innerHTML.trim();
+  // if (elementLike.className === "activateLike") {
+  //   elementLike.className = "Like";
+  //   element.textContent = like === 1 ? "" : --like;
+  //   post.DeleteLike(localStorage.getItem("username"));
+  // } else {
+  //   post.AddLike(localStorage.getItem("username"));
+  //   elementLike.className = "activateLike";
+  //   element.textContent = like === 0 ? 1 : ++like;
+  // }
 }
 async function BotItem(post) {
-  const likeCommentShareIsLike = await Promise.all([
+  const likeCommentShare = await Promise.all([
     post.CountLike(),
     post.CountComment(),
     post.CountShare(),
-    post.isLikedByUser(username),
   ]);
-  await delay(4000);
+  //Phải tách promies này ra vì hình như nó xayra hiện tượng look table bên DB
+  //Hiện tượng này dẫn đến câu truy vấn bị hủy
+  //3 cái trên cũng bị như vậy nhưng tần số rất ít
+  const isLike = await post.isLikedByUser(username);
+  await delay(2000);
   return ` <div class="Post-Item-Bot">
   <div class="Post-Item-Bot_Container">
     <div class="Header">
       <div class="Header_Left">
         <img src="./images/like.svg" alt="" />
-        <span> ${
-          likeCommentShareIsLike[0] ? `${likeCommentShareIsLike[0]}` : ``
-        }</span>
+        <span> ${likeCommentShare[0] ? `${likeCommentShare[0]}` : ``}</span>
        
       </div>
       <div class="Header_Right">
         ${
-          likeCommentShareIsLike[2]
-            ? `<span style="margin-left : 10px;">${likeCommentShareIsLike[2]} lượt chia sẻ</span>`
+          likeCommentShare[2]
+            ? `<span style="margin-left : 10px;">${likeCommentShare[2]} lượt chia sẻ</span>`
             : ``
         }
         ${
-          likeCommentShareIsLike[1]
-            ? `<span>${likeCommentShareIsLike[1]} bình luận</span>`
+          likeCommentShare[1]
+            ? `<span>${likeCommentShare[1]} bình luận</span>`
             : ``
         }
       </div>
     </div>
     <div class="Fotter">
-      <div onclick="clickLike(this , {postId : '${
-        post.ID
-      }' , userId : ${username}});"  class="${
-    likeCommentShareIsLike[3] ? "activateLike" : "Like"
-  }">
+      <div class="${isLike ? "activateLike" : "Like"}">
         <i></i>
         <span>Thích</span>
       </div>
@@ -198,6 +153,8 @@ async function BotItem(post) {
 </div>`;
 }
 async function loadPostItem(posts) {
+  let mainWebContent_button = document.querySelector("#btn_XemThem");
+  mainWebContent_button.className = "displaynone";
   let preload = document.querySelector("#ListPost_PreLoad");
   preload.style.display = "block";
   for (let index = 0; index < posts.length; index++) {
@@ -244,13 +201,6 @@ function LoadFriend(friends) {
   });
 }
 let trang = 1;
-window.addEventListener("scroll", async function () {
-  if (window.innerHeight + window.pageYOffset >= document.body.offsetHeight) {
-    console.log(trang);
-    loadMorePosts(trang);
-    trang++;
-  }
-});
 async function loadMorePosts(trang) {
   let posts = await fetchData(
     `http://localhost:8000/data/api/post/trang?id=${trang}`
@@ -262,11 +212,19 @@ async function loadMorePosts(trang) {
     .then()
     .catch()
     .finally(() => {
+      let mainWebContent_button = document.querySelector("#btn_XemThem");
+      mainWebContent_button.className = "";
       let preload = document.querySelector("#ListPost_PreLoad");
       preload.style.display = "none";
     });
 }
 async function main() {
+  let mainWebContent_button = document.querySelector("#btn_XemThem");
+  mainWebContent_button.addEventListener("click", function () {
+    loadMorePosts(trang);
+    console.log(trang);
+    trang++;
+  });
   BlurFor_header_search_input();
   let friends = await fetchData(
     `http://localhost:8000/friendship?id=${username}`
@@ -281,6 +239,8 @@ async function main() {
     .then()
     .catch()
     .finally(() => {
+      let mainWebContent_button = document.querySelector("#btn_XemThem");
+      mainWebContent_button.className = "";
       var preload = document.querySelector("#ListPost_PreLoad");
       preload.style.display = "none";
     });

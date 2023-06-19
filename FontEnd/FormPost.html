@@ -13,6 +13,11 @@
     />
   </head>
   <body>
+    <script>
+      function delay(ms) {
+        return new Promise((resolve) => setTimeout(resolve, ms));
+      }
+    </script>
     <header class="header">
       <div class="HeaderContainer">
         <div class="HeaderContainer_Item Logo">
@@ -45,7 +50,7 @@
               </div>
               <div class="HistorySearch-item">
                 <div>
-                  <img src="./images/user1.jfif" alt="" />
+                  <img src="./images/R (1).jpeg" alt="" />
                   <span>Nghĩa Nghĩa</span>
                 </div>
                 <i
@@ -62,7 +67,7 @@
               </div>
               <div class="HistorySearch-item">
                 <div>
-                  <img src="./images/user1.jfif" alt="" />
+                  <img src="./images/R (1).jpeg" alt="" />
                   <span>Nghĩa Nghĩa</span>
                 </div>
                 <i
@@ -79,7 +84,7 @@
               </div>
               <div class="HistorySearch-item">
                 <div>
-                  <img src="./images/user1.jfif" alt="" />
+                  <img src="./images/R (1).jpeg" alt="" />
                   <span>Nghĩa Nghĩa</span>
                 </div>
                 <i
@@ -96,7 +101,7 @@
               </div>
               <div class="HistorySearch-item">
                 <div>
-                  <img src="./images/user1.jfif" alt="" />
+                  <img src="./images/R (1).jpeg" alt="" />
                   <span>Nghĩa Nghĩa</span>
                 </div>
                 <i
@@ -113,7 +118,7 @@
               </div>
               <div class="HistorySearch-item">
                 <div>
-                  <img src="./images/user1.jfif" alt="" />
+                  <img src="./images/R (1).jpeg" alt="" />
                   <span>Nghĩa Nghĩa</span>
                 </div>
                 <i
@@ -130,7 +135,7 @@
               </div>
               <div class="HistorySearch-item">
                 <div>
-                  <img src="./images/user1.jfif" alt="" />
+                  <img src="./images/R (1).jpeg" alt="" />
                   <span>Nghĩa Nghĩa</span>
                 </div>
                 <i
@@ -180,7 +185,7 @@
           <div class="Account">
             <img
               id="AnhDaiDien"
-              src="./images/th.jfif"
+              src="./images/R (1).jpeg"
               alt=""
               style="width: 100%; height: 100%; border-radius: 20px"
             />
@@ -188,7 +193,11 @@
           <div class="Account_CaNhan displaynone">
             <div class="header_Account_CaNhan">
               <div class="header_Account_CaNhan-item1">
-                <img id="AnhDaiDien3" src="./images/anh-dai-dien-chibi-cute_104205129.jpg" alt="" />
+                <img
+                  id="AnhDaiDien3"
+                  src="./images/anh-dai-dien-chibi-cute_104205129.jpg"
+                  alt=""
+                />
                 <span>Nghĩa Nghĩa</span>
               </div>
               <div class="header_Account_CaNhan-item2">
@@ -299,20 +308,20 @@
               </div>
               <a href="./FormLogIn/FormLogIn.html">
                 <div class="Account_CaNhan-item">
-                <div class="icon">
-                  <i
-                    style="
-                      background-image: url('https://static.xx.fbcdn.net/rsrc.php/v3/yr/r/TZSWLqRaW74.png');
-                      background-position: 0px -336px;
-                      background-size: 26px 664px;
-                      width: 20px;
-                      height: 20px;
-                    "
-                  ></i>
+                  <div class="icon">
+                    <i
+                      style="
+                        background-image: url('https://static.xx.fbcdn.net/rsrc.php/v3/yr/r/TZSWLqRaW74.png');
+                        background-position: 0px -336px;
+                        background-size: 26px 664px;
+                        width: 20px;
+                        height: 20px;
+                      "
+                    ></i>
+                  </div>
+                  <span>Đăng xuất</span>
                 </div>
-                <span>Đăng xuất</span>
-              </div>
-            </a>
+              </a>
             </div>
           </div>
           <script>
@@ -359,7 +368,7 @@
             <span>Trang chủ</span>
           </div>
           <div>
-            <img id="AnhDaiDien2" src="./images/th.jfif" alt="" />
+            <img id="AnhDaiDien2" src="./images/R (1).jpeg" alt="" />
             <span id="Name2">Nghĩa Nghĩa</span>
           </div>
         </div>
@@ -585,7 +594,7 @@
       </div>
       <div class="CratePost">
         <div class="CratePost_Top">
-          <img src="./images/th.jfif" alt="" />
+          <img src="./images/R (1).jpeg" alt="" />
           <input type="text" placeholder="Nghĩa ơi , Bạn đang nghĩ gì thế ?" />
         </div>
         <div class="CratePost_Bot">
@@ -624,29 +633,87 @@
           <span>Tạo phòng họp mặt</span>
         </div>
       </div>
-      <div class="ListPost" id="ListPost" style="width: 100%">
-        
-      </div>
+      <div class="ListPost" id="ListPost" style="width: 100%"></div>
+      <div><button id="btn_XemThem">Xem thêm</button></div>
       <div class="ListPost_PreLoad displaynone" id="ListPost_PreLoad">
         <div class="Post-Item-Top">
-          <div style="display: flex;  ">
-            <div class="animation_preload" style="margin-right: 10px; opacity: 0.25;width: 40px;height: 40px;border-radius: 50%;">
-            </div>
+          <div style="display: flex">
+            <div
+              class="animation_preload"
+              style="
+                margin-right: 10px;
+                opacity: 0.25;
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+              "
+            ></div>
             <div>
-              <div class="animation_preload" style="border-radius: 5px; width: 88px;height: 8px;margin-top: 5px;animation-delay: 0.5s;"></div>
-              <div class="animation_preload" style="border-radius: 5px; width: 68px;height: 8px;margin-top: 5px; animation-delay: 0.5s;"></div>
-
+              <div
+                class="animation_preload"
+                style="
+                  border-radius: 5px;
+                  width: 88px;
+                  height: 8px;
+                  margin-top: 5px;
+                  animation-delay: 0.5s;
+                "
+              ></div>
+              <div
+                class="animation_preload"
+                style="
+                  border-radius: 5px;
+                  width: 68px;
+                  height: 8px;
+                  margin-top: 5px;
+                  animation-delay: 0.5s;
+                "
+              ></div>
             </div>
           </div>
         </div>
-        <div style="width: 100%;" class="Post-Item-center">
-          <div style="width: 100%;height: 180px;"></div>
+        <div style="width: 100%" class="Post-Item-center">
+          <div style="width: 100%; height: 180px"></div>
         </div>
-        <div style="width: 100%; padding-bottom: 7px;" class="Post-Item-bot">
-          <div style="width: 100%;height: 20px;display: flex;justify-content: space-around;">
-            <div class="animation_preload" style="border-radius: 5px; width: 66px;height: 8px;margin-top: 5px;animation-delay: 0.2s;"></div>
-            <div class="animation_preload" style="border-radius: 5px; width: 66px;height: 8px;margin-top: 5px;animation-delay: 0.4s;"></div>
-            <div class="animation_preload" style="border-radius: 5px; width: 66px;height: 8px;margin-top: 5px;animation-delay: 0.6s;"></div>
+        <div style="width: 100%; padding-bottom: 7px" class="Post-Item-bot">
+          <div
+            style="
+              width: 100%;
+              height: 20px;
+              display: flex;
+              justify-content: space-around;
+            "
+          >
+            <div
+              class="animation_preload"
+              style="
+                border-radius: 5px;
+                width: 66px;
+                height: 8px;
+                margin-top: 5px;
+                animation-delay: 0.2s;
+              "
+            ></div>
+            <div
+              class="animation_preload"
+              style="
+                border-radius: 5px;
+                width: 66px;
+                height: 8px;
+                margin-top: 5px;
+                animation-delay: 0.4s;
+              "
+            ></div>
+            <div
+              class="animation_preload"
+              style="
+                border-radius: 5px;
+                width: 66px;
+                height: 8px;
+                margin-top: 5px;
+                animation-delay: 0.6s;
+              "
+            ></div>
           </div>
         </div>
       </div>
@@ -757,171 +824,391 @@
         </div>
       </div>
     </nav>
-    
-      <div class="overlay displaynone">
-        <div class="FormTaoPost">
-          <div
-            style="
-              text-align: center;
-              padding: 20px 0;
-              border-bottom: 1px solid #e5e5e5;
-              margin-bottom: 15px;
-              position: relative;
-            "
-          >
-            <h2>Tạo bài viết</h2>
-           <div class="close_FormTaoPost">
-            <i style="background-image: url(&quot;https://static.xx.fbcdn.net/rsrc.php/v3/y3/r/xp7hCZ-2B5Z.png&quot;); background-position: -132px -88px; background-size: 190px 172px; width: 20px; height: 20px; background-repeat: no-repeat; float: right;"></i>
-           </div>
+    <div class="overlay displaynone">
+      <div class="FormTaoPost">
+        <div
+          style="
+            text-align: center;
+            padding: 20px 0;
+            border-bottom: 1px solid #e5e5e5;
+            margin-bottom: 15px;
+            position: relative;
+          "
+        >
+          <h2>Tạo bài viết</h2>
+          <div class="close_FormTaoPost">
+            <i
+              style="
+                background-image: url('https://static.xx.fbcdn.net/rsrc.php/v3/y3/r/xp7hCZ-2B5Z.png');
+                background-position: -132px -88px;
+                background-size: 190px 172px;
+                width: 20px;
+                height: 20px;
+                background-repeat: no-repeat;
+                float: right;
+              "
+            ></i>
           </div>
-          <div class="FormCreatePost_User">
-            <div>
-              <a href="">
-                <img src="./images/anhdd1.jpg" alt="" />
-              </a>
-            </div>
-            <div>
-              <h4>Nghĩa Nghĩa</h4>
-              <div style="position: relative;">
-                <div id="the_object_of_the_article" class="the_object_of_the_article">
-                  <img style="width: 12px;height: 12px;" src="./images/bXBYraHyR0S.png" alt="Chỉ mình tôi" >
+        </div>
+        <div class="FormCreatePost_User">
+          <div>
+            <a href="">
+              <img src="./images/anhdd1.jpg" alt="" />
+            </a>
+          </div>
+          <div>
+            <h4>Nghĩa Nghĩa</h4>
+            <div style="position: relative">
+              <div
+                id="the_object_of_the_article"
+                class="the_object_of_the_article"
+              >
+                <img
+                  style="width: 12px; height: 12px"
+                  src="./images/bXBYraHyR0S.png"
+                  alt="Chỉ mình tôi"
+                />
+                <span>Chỉ mình tôi</span>
+                <i
+                  style="
+                    background-image: url('https://static.xx.fbcdn.net/rsrc.php/v3/y3/r/xp7hCZ-2B5Z.png');
+                    background-position: -124px -154px;
+                    background-size: 190px 172px;
+                    width: 12px;
+                    height: 12px;
+                    background-repeat: no-repeat;
+                    float: right;
+                  "
+                ></i>
+              </div>
+              <div class="subMenu_the_object_of_the_article displaynone">
+                <div class="the_object_of_the_article">
+                  <img
+                    style="width: 12px; height: 12px"
+                    src="./images/bXBYraHyR0S.png"
+                    alt="Chỉ mình tôi"
+                  />
                   <span>Chỉ mình tôi</span>
-                  <i style="background-image: url(&quot;https://static.xx.fbcdn.net/rsrc.php/v3/y3/r/xp7hCZ-2B5Z.png&quot;); background-position: -124px -154px; background-size: 190px 172px; width: 12px; height: 12px; background-repeat: no-repeat; float: right;"></i>
+                  <i
+                    style="
+                      background-image: url('https://static.xx.fbcdn.net/rsrc.php/v3/y3/r/xp7hCZ-2B5Z.png');
+                      background-position: -124px -154px;
+                      background-size: 190px 172px;
+                      width: 12px;
+                      height: 12px;
+                      background-repeat: no-repeat;
+                      float: right;
+                    "
+                  ></i>
                 </div>
-                <div class="subMenu_the_object_of_the_article displaynone" >
-                  <div class="the_object_of_the_article">
-                    <img style="width: 12px;height: 12px;" src="./images/bXBYraHyR0S.png" alt="Chỉ mình tôi" >
-                    <span>Chỉ mình tôi</span>
-                    <i style="background-image: url(&quot;https://static.xx.fbcdn.net/rsrc.php/v3/y3/r/xp7hCZ-2B5Z.png&quot;); background-position: -124px -154px; background-size: 190px 172px; width: 12px; height: 12px; background-repeat: no-repeat; float: right;"></i>
-                  </div>
-                  <div class="the_object_of_the_article">
-                    <img style="width: 12px;height: 12px;" src="./images/bXBYraHyR0S.png" alt="Chỉ mình tôi" >
-                    <span>Bạn bè</span>
-                    <i style="background-image: url(&quot;https://static.xx.fbcdn.net/rsrc.php/v3/y3/r/xp7hCZ-2B5Z.png&quot;); background-position: -124px -154px; background-size: 190px 172px; width: 12px; height: 12px; background-repeat: no-repeat; float: right;"></i>
-                  </div>
-                  <div class="the_object_of_the_article">
-                    <img style="width: 12px;height: 12px;" src="./images/bXBYraHyR0S.png" alt="Chỉ mình tôi" >
-                    <span>Công khai</span>
-                    <i style=" background-image: url(&quot;https://static.xx.fbcdn.net/rsrc.php/v3/y3/r/xp7hCZ-2B5Z.png&quot;); background-position: -124px -154px; background-size: 190px 172px; width: 12px; height: 12px; background-repeat: no-repeat;float: right;"></i>
-                  </div>
+                <div class="the_object_of_the_article">
+                  <img
+                    style="width: 12px; height: 12px"
+                    src="./images/bXBYraHyR0S.png"
+                    alt="Chỉ mình tôi"
+                  />
+                  <span>Bạn bè</span>
+                  <i
+                    style="
+                      background-image: url('https://static.xx.fbcdn.net/rsrc.php/v3/y3/r/xp7hCZ-2B5Z.png');
+                      background-position: -124px -154px;
+                      background-size: 190px 172px;
+                      width: 12px;
+                      height: 12px;
+                      background-repeat: no-repeat;
+                      float: right;
+                    "
+                  ></i>
+                </div>
+                <div class="the_object_of_the_article">
+                  <img
+                    style="width: 12px; height: 12px"
+                    src="./images/bXBYraHyR0S.png"
+                    alt="Chỉ mình tôi"
+                  />
+                  <span>Công khai</span>
+                  <i
+                    style="
+                      background-image: url('https://static.xx.fbcdn.net/rsrc.php/v3/y3/r/xp7hCZ-2B5Z.png');
+                      background-position: -124px -154px;
+                      background-size: 190px 172px;
+                      width: 12px;
+                      height: 12px;
+                      background-repeat: no-repeat;
+                      float: right;
+                    "
+                  ></i>
                 </div>
               </div>
-              <script>
-                //Sự kiện chọn đối tượng bài đăng
-                var the_object_of_the_article = document.querySelector("#the_object_of_the_article");
-                var subMenu_the_object_of_the_article = document.querySelector("#the_object_of_the_article + div");
-                the_object_of_the_article.addEventListener("click", function () {
-                  if(subMenu_the_object_of_the_article.classList.contains("displaynone")){
-                    subMenu_the_object_of_the_article.classList.remove("displaynone");
-                  }else{subMenu_the_object_of_the_article.classList.add("displaynone");}
+            </div>
+            <script>
+              //Sự kiện chọn đối tượng bài đăng
+              var the_object_of_the_article = document.querySelector(
+                "#the_object_of_the_article"
+              );
+              var subMenu_the_object_of_the_article = document.querySelector(
+                "#the_object_of_the_article + div"
+              );
+              the_object_of_the_article.addEventListener("click", function () {
+                if (
+                  subMenu_the_object_of_the_article.classList.contains(
+                    "displaynone"
+                  )
+                ) {
+                  subMenu_the_object_of_the_article.classList.remove(
+                    "displaynone"
+                  );
+                } else {
+                  subMenu_the_object_of_the_article.classList.add(
+                    "displaynone"
+                  );
+                }
+              });
+              const listItem_subMenu_the_object_of_the_article =
+                subMenu_the_object_of_the_article.querySelectorAll(
+                  ".the_object_of_the_article"
+                );
+              listItem_subMenu_the_object_of_the_article.forEach((item) => {
+                item.addEventListener("click", function () {
+                  the_object_of_the_article.innerHTML = item.innerHTML;
+                  subMenu_the_object_of_the_article.classList.add(
+                    "displaynone"
+                  );
                 });
-                const listItem_subMenu_the_object_of_the_article = subMenu_the_object_of_the_article.querySelectorAll(".the_object_of_the_article");
-                listItem_subMenu_the_object_of_the_article.forEach((item) => {
-                  item.addEventListener("click", function () {
-                    the_object_of_the_article.innerHTML = item.innerHTML;
-                    subMenu_the_object_of_the_article.classList.add("displaynone");
-                });
-                });
-              </script>
+              });
+            </script>
+          </div>
+        </div>
+        <div class="FormCreatePost_Content">
+          <textarea placeholder="Nghĩa ơi, bạn đang nghĩ gì thế ?"></textarea>
+          <div class="FormCreatePost_Content_UpLoad displaynone">
+            <div class="FormCreatePost_Content_UpLoad-Top">
+              <img src="" alt="" />
+              <input type="file" name="file" />
+              <div class="UpLoad-Top-icon">
+                <i
+                  style="
+                    background-image: url('https://static.xx.fbcdn.net/rsrc.php/v3/yf/r/S2RzBqcwbI-.png');
+                    background-position: 0px -86px;
+                    background-size: 38px 162px;
+                    width: 20px;
+                    height: 20px;
+                    background-repeat: no-repeat;
+                    display: inline-block;
+                  "
+                >
+                </i>
+              </div>
+              <h3>Thêm ảnh/Video</h3>
+              <span>hoặc kéo và thả</span>
+              <div class="close_FormTaoPost_Img">
+                <i
+                  style="
+                    background-image: url('https://static.xx.fbcdn.net/rsrc.php/v3/y3/r/xp7hCZ-2B5Z.png');
+                    background-position: -132px -88px;
+                    background-size: 190px 172px;
+                    width: 20px;
+                    height: 20px;
+                    background-repeat: no-repeat;
+                    float: right;
+                  "
+                ></i>
+              </div>
             </div>
           </div>
-          <div class="FormCreatePost_Content">
-            <textarea placeholder="Nghĩa ơi, bạn đang nghĩ gì thế ?"></textarea>
-             <div class="FormCreatePost_Content_UpLoad displaynone">
-              <div class="FormCreatePost_Content_UpLoad-Top">
-                <img src="" alt="">
-                <input type="file" name="file">
-                <div class="UpLoad-Top-icon" >
-                  <i style="background-image: url(&quot;https://static.xx.fbcdn.net/rsrc.php/v3/yf/r/S2RzBqcwbI-.png&quot;); background-position: 0px -86px; background-size: 38px 162px; width: 20px; height: 20px; background-repeat: no-repeat; display: inline-block;"></i>
-                </div>
-                <h3>Thêm ảnh/Video</h3>
-                <span>hoặc kéo và thả</span>
-                <div class="close_FormTaoPost_Img">
-                  <i style="background-image: url(&quot;https://static.xx.fbcdn.net/rsrc.php/v3/y3/r/xp7hCZ-2B5Z.png&quot;); background-position: -132px -88px; background-size: 190px 172px; width: 20px; height: 20px; background-repeat: no-repeat; float: right;"></i>
-                 </div>
-              </div>
-             </div>
-            <div class="FormCreatePost_Content-item displaynone">
-              <img style="width: 38px;height: 38px;" src="./images/SATP_Aa_square-2x.png" alt="">
-              <i style="height: 24px; width: 24px; background-image: url(&quot;https://static.xx.fbcdn.net/rsrc.php/v3/yE/r/EZ2M5Z2ETSf.png&quot;); background-position: 0px -112px; background-size: 34px 446px; background-repeat: no-repeat; display: inline-block;"></i>
-            </div>
+          <div class="FormCreatePost_Content-item displaynone">
+            <img
+              style="width: 38px; height: 38px"
+              src="./images/SATP_Aa_square-2x.png"
+              alt=""
+            />
+            <i
+              style="
+                height: 24px;
+                width: 24px;
+                background-image: url('https://static.xx.fbcdn.net/rsrc.php/v3/yE/r/EZ2M5Z2ETSf.png');
+                background-position: 0px -112px;
+                background-size: 34px 446px;
+                background-repeat: no-repeat;
+                display: inline-block;
+              "
+            ></i>
+          </div>
         </div>
         <script>
-          var close_FormTaoPost_Img = document.querySelector(".close_FormTaoPost_Img");
-          var FormCreatePost_Content_UpLoad = document.querySelector(".FormCreatePost_Content_UpLoad");
-          var FormCreatePost_Content_UpLoad_Input = document.querySelector(".FormCreatePost_Content_UpLoad input");
-          FormCreatePost_Content_UpLoad.addEventListener("click" , () =>{
+          var close_FormTaoPost_Img = document.querySelector(
+            ".close_FormTaoPost_Img"
+          );
+          var FormCreatePost_Content_UpLoad = document.querySelector(
+            ".FormCreatePost_Content_UpLoad"
+          );
+          var FormCreatePost_Content_UpLoad_Input = document.querySelector(
+            ".FormCreatePost_Content_UpLoad input"
+          );
+          FormCreatePost_Content_UpLoad.addEventListener("click", () => {
             FormCreatePost_Content_UpLoad_Input.click();
-          })
-          var FormCreatePost_Content_UpLoad_Img = document.querySelector(".FormCreatePost_Content_UpLoad img");
-          FormCreatePost_Content_UpLoad_Input.addEventListener("change" , () => {
-            FormCreatePost_Content_UpLoad_Img.src = URL.createObjectURL(FormCreatePost_Content_UpLoad_Input.files[0]);
           });
-          close_FormTaoPost_Img.addEventListener("click" , () =>{
+          var FormCreatePost_Content_UpLoad_Img = document.querySelector(
+            ".FormCreatePost_Content_UpLoad img"
+          );
+          FormCreatePost_Content_UpLoad_Input.addEventListener("change", () => {
+            FormCreatePost_Content_UpLoad_Img.src = URL.createObjectURL(
+              FormCreatePost_Content_UpLoad_Input.files[0]
+            );
+          });
+          close_FormTaoPost_Img.addEventListener("click", () => {
             event.stopPropagation();
             FormCreatePost_Content_UpLoad.classList.add("displaynone");
           });
         </script>
-        
         <div>
-          <div 
-          style="display: flex;justify-content: space-around;align-items: center;border: 1px solid #CED0D4;height: 57px;border-radius: 8px;box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);">
-            <span style="font-size: 14px;color: #050505;font-weight: 600;">Thêm vào bài viết của bạn</span>
+          <div
+            style="
+              display: flex;
+              justify-content: space-around;
+              align-items: center;
+              border: 1px solid #ced0d4;
+              height: 57px;
+              border-radius: 8px;
+              box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+            "
+          >
+            <span style="font-size: 14px; color: #050505; font-weight: 600"
+              >Thêm vào bài viết của bạn</span
+            >
             <div class="FormCreatePost_ListIcon">
-              <img class="upload" src="./images/a6OjkIIE-R0.png" alt="">
-              <img src="./images/MqTJr_DM3Jg.png" alt="">
-              <img src="./images/yMDS19UDsWe.png" alt="">
-              <img src="./images/uywzfiZad5N.png" alt="">
-              <img src="./images/j0Jp-GpONWx.png" alt="">
-              <i data-visualcompletion="css-img" class="x1b0d499 xl1xv1r" style="height: 24px; width: 24px; background-image: url(&quot;https://static.xx.fbcdn.net/rsrc.php/v3/yf/r/S2RzBqcwbI-.png&quot;); background-position: 0px -38px; background-size: 38px 162px; background-repeat: no-repeat; display: inline-block;"></i>
+              <img class="upload" src="./images/a6OjkIIE-R0.png" alt="" />
+              <img src="./images/MqTJr_DM3Jg.png" alt="" />
+              <img src="./images/yMDS19UDsWe.png" alt="" />
+              <img src="./images/uywzfiZad5N.png" alt="" />
+              <img src="./images/j0Jp-GpONWx.png" alt="" />
+              <i
+                data-visualcompletion="css-img"
+                class="x1b0d499 xl1xv1r"
+                style="
+                  height: 24px;
+                  width: 24px;
+                  background-image: url('https://static.xx.fbcdn.net/rsrc.php/v3/yf/r/S2RzBqcwbI-.png');
+                  background-position: 0px -38px;
+                  background-size: 38px 162px;
+                  background-repeat: no-repeat;
+                  display: inline-block;
+                "
+              ></i>
             </div>
           </div>
         </div>
-        <div id="FormCreatePost_Button" class="nonactivate" style="width: 100%;display: flex;justify-content: center;align-items: center;">
+        <div
+          onclick="buttonDangClick(this)"
+          id="FormCreatePost_Button"
+          class="nonactivate"
+          style="
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+          "
+        >
           <button type="button">Đăng</button>
         </div>
       </div>
-    
+    </div>
+    <div
+      style="
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 99999;
+        background-color: rgba(0, 0, 0, 0.1);
+        width: 100%;
+        height: 100%;
+        display: none;
+        align-items: center;
+        justify-content: center;
+      "
+    >
+      <div class="loader"></div>
+    </div>
     <script>
+      async function buttonDangClick(element) {
+        if (element.className === "activate") {
+          const formData = new FormData();
+          formData.append("", FormCreatePost_Content_UpLoad_Input.files[0]);
+          const pathimg = await fetchData(
+            "http://localhost:8000/data/api/post/upload_img",
+            {
+              method: "POST",
+              body: formData,
+            }
+          );
+          const data = {
+            UserID: localStorage.getItem("username"),
+            pathimg: pathimg,
+            content: textareaFormCreatePost.value,
+            category: "Post",
+          };
+          fetchData("http://localhost:8000/data/api/post/createpost", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+          });
+          let loader = document.querySelector(".loader");
+          let parenLoader = loader.parentElement;
+          parenLoader.style.display = "flex";
+          await delay(4000);
+          parenLoader.style.display = "none";
+          var elementoverlay = document.querySelector(".overlay");
+          elementoverlay.classList.add("displaynone");
+        }
+      }
       /*
         Tạo sự kiện click cho thẻ input tại CratePost
           +Khi click thì xóa class displaynone của  form .overlay (class displaynone giúp ẩn element)
         Tạo sự kiện click cho dấu X tại FormCratePost
           +Khi click thì thêm class displaynone của  form .overlay (class displaynone giúp ẩn element)
       */
-      var FormCreatePost_Button = document.querySelector("#FormCreatePost_Button");
+      var FormCreatePost_Button = document.querySelector(
+        "#FormCreatePost_Button"
+      );
       var upload = document.querySelector("img.upload");
-      var textareaFormCreatePost = document.querySelector(".FormCreatePost_Content textarea");
-      var createPost = document.querySelector(".CratePost .CratePost_Top input");
+      var textareaFormCreatePost = document.querySelector(
+        ".FormCreatePost_Content textarea"
+      );
+      var createPost = document.querySelector(
+        ".CratePost .CratePost_Top input"
+      );
       var elementoverlay = document.querySelector(".overlay");
       var closeFormTaoPost = document.querySelector(".close_FormTaoPost");
       createPost.addEventListener("click", function () {
         elementoverlay.classList.remove("displaynone");
-  });
-  closeFormTaoPost.addEventListener("click", function () {
-    elementoverlay.classList.add("displaynone");
-  });
+      });
+      closeFormTaoPost.addEventListener("click", function () {
+        elementoverlay.classList.add("displaynone");
+      });
       /*Tạo sự kiện textchange cho thẻ input trong form đăng bài viết
-          + thẻ input không có text thì gán cho button đăng class nonactivate 
+          + thẻ input không có text thì gán cho button đăng class nonactivate
               (Không cho user ấn đăng bài khi chưa nhập gì)
           + ngược lại thì gán cho class activate
       */
-      
-      textareaFormCreatePost.addEventListener("input", function() {
-        if(textareaFormCreatePost.value){
+
+      textareaFormCreatePost.addEventListener("input", function () {
+        if (textareaFormCreatePost.value) {
           FormCreatePost_Button.className = "activate";
-        }
-        else{
+        } else {
           FormCreatePost_Button.className = "nonactivate";
-      }
+        }
       });
-      upload.addEventListener("click" , () =>{
+      upload.addEventListener("click", () => {
         FormCreatePost_Content_UpLoad.classList.remove("displaynone");
       });
-
-      
-    </script> 
+    </script>
+    <script>
+      function main() {}
+      main();
+    </script>
     <script src="./DTO/Post.js"></script>
-    <script src="./FormPost.js"></script>
+    <script type="module" src="./FormPost.js"></script>
   </body>
 </html>

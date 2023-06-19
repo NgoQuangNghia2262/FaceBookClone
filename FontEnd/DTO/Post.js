@@ -4,7 +4,7 @@ async function fetchData(coursAPI, data) {
     const result = await response.json();
     return result;
   } catch (error) {
-    console.error(error);
+    console.log(error);
   }
 }
 class Post {
@@ -35,15 +35,53 @@ class Post {
     return comment[0].countComment;
   }
   async CountShare() {
-    const share = await fetchData(
+    let response = await fetch(
       `http://localhost:8000/data/api/post/countShare/${this.ID}`
     );
+    if (response.status === 500) {
+      response = await fetch(
+        `http://localhost:8000/data/api/post/countShare/${this.ID}`
+      );
+    }
+    const share = await response.json();
     return share[0].countShare;
   }
   async isLikedByUser(userID) {
-    const wasLike = await fetchData(
+    let response = await fetch(
       `http://localhost:8000/data/api/post/waslike/?postId=${this.ID}&userId=${userID}`
     );
-    return wasLike[0] ? true : false;
+    if (response.status === 500) {
+      response = await fetch(
+        `http://localhost:8000/data/api/post/waslike/?postId=${this.ID}&userId=${userID}`
+      );
+    }
+    const result = await response.json();
+    return result[0] ? true : false;
+  }
+  async AddLike(userID) {
+    const data = {
+      postId: obj.postId,
+      userId: userID,
+    };
+    fetch("http://localhost:8000/data/api/post/add/like", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+  }
+  async DeleteLike(userID) {
+    const data = {
+      postId: obj.postId,
+      userId: userID,
+    };
+    fetch("http://localhost:8000/data/api/post/delete/like", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
   }
 }

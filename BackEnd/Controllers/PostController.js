@@ -8,7 +8,7 @@ const PostController = {
     try {
       const query = `SELECT *
       FROM Post
-      where Category = N'Post'
+      where Category = 'Post'
       ORDER BY CreatedTime DESC
       OFFSET ${req.query.id * 2} ROWS 
       FETCH NEXT 2 ROWS ONLY;`;
@@ -53,13 +53,11 @@ const PostController = {
       const user = await ExcuteQuery(
         `select * from tbLike where PostId = '${req.query.postId}' and ProfileID = '${req.query.userId}'`
       );
-
       res.send(user);
     } catch (err) {
       res.status(500).json(err);
     }
   },
-
   AddLike: async (req, res) => {
     try {
       const query = `insert into tbLike values('${req.body.postId}' , '${req.body.userId}')`;
@@ -85,7 +83,6 @@ const PostController = {
     form.keepExtensions = true;
     form.maxFieldsSize = 10 * 1024 * 1024;
     form.multiples = false;
-
     form.parse(req, async (err, fields, files) => {
       if (err) {
         console.error(err);

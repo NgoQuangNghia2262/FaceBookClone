@@ -1,3 +1,8 @@
+import { postElement } from "./HTML_Element/Post.js";
+import { FriendController } from "./DTO/Friend.js";
+import { UserController } from "./DTO/User.js";
+import Post, { PostController } from "./DTO/Post.js";
+
 var username = localStorage.getItem("username");
 
 async function fetchData(coursAPI, data) {
@@ -19,139 +24,7 @@ function BlurFor_header_search_input() {
     history.classList.remove("displaynone");
   });
 }
-function delay(ms) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
-async function TopItem(post) {
-  const userProfile = await post.getUser();
-  await delay(3000);
-  return ` <div class="Post-Item-Top">
-      <div style="display: flex">
-        <div>
-          <a href="">
-            <img src="${userProfile.Img}" alt="" />
-          </a>
-        </div>
-        <div>
-          <h4>${userProfile.Name}</h4>
-          <p>Được tài trợ</p>
-        </div>
-      </div>
-      <div>
-        <svg
-          fill="currentColor"
-          viewBox="0 0 20 20"
-          width="1em"
-          height="1em"
-          style="font-size: 22px; color: #65676b; margin-right: 10px"
-        >
-          <g fill-rule="evenodd" transform="translate(-446 -350)">
-            <path
-              d="M458 360a2 2 0 1 1-4 0 2 2 0 0 1 4 0m6 0a2 2 0 1 1-4 0 2 2 0 0 1 4 0m-12 0a2 2 0 1 1-4 0 2 2 0 0 1 4 0"
-            ></path>
-          </g>
-        </svg>
-      </div>
-    </div>`;
-}
-async function CenterItem(post) {
-  await delay(2000);
-  return `
-  <div class="Post-Item-Center">
-  <div class="Content" style="padding: 5px 15px">
-    <p style="line-height: 20px">${post.Content}</p>
-  </div>
-  <div class="images">
-    <a href="">
-      <img src="${post.Img}" alt="" />
-    </a>
-  </div>
-</div>`;
-}
-function clickLike(elementLike) {
-  console.log("Hi");
-  // var parentElement = elementLike.parentNode.parentNode.firstElementChild;
-  // var element = parentElement.firstElementChild.children[1];
-  // var like = element.innerHTML.trim();
-  // if (elementLike.className === "activateLike") {
-  //   elementLike.className = "Like";
-  //   element.textContent = like === 1 ? "" : --like;
-  //   post.DeleteLike(localStorage.getItem("username"));
-  // } else {
-  //   post.AddLike(localStorage.getItem("username"));
-  //   elementLike.className = "activateLike";
-  //   element.textContent = like === 0 ? 1 : ++like;
-  // }
-}
-async function BotItem(post) {
-  const likeCommentShare = await Promise.all([
-    post.CountLike(),
-    post.CountComment(),
-    post.CountShare(),
-  ]);
-  //Phải tách promies này ra vì hình như nó xayra hiện tượng look table bên DB
-  //Hiện tượng này dẫn đến câu truy vấn bị hủy
-  //3 cái trên cũng bị như vậy nhưng tần số rất ít
-  const isLike = await post.isLikedByUser(username);
-  await delay(2000);
-  return ` <div class="Post-Item-Bot">
-  <div class="Post-Item-Bot_Container">
-    <div class="Header">
-      <div class="Header_Left">
-        <img src="./images/like.svg" alt="" />
-        <span> ${likeCommentShare[0] ? `${likeCommentShare[0]}` : ``}</span>
-       
-      </div>
-      <div class="Header_Right">
-        ${
-          likeCommentShare[2]
-            ? `<span style="margin-left : 10px;">${likeCommentShare[2]} lượt chia sẻ</span>`
-            : ``
-        }
-        ${
-          likeCommentShare[1]
-            ? `<span>${likeCommentShare[1]} bình luận</span>`
-            : ``
-        }
-      </div>
-    </div>
-    <div class="Fotter">
-      <div class="${isLike ? "activateLike" : "Like"}">
-        <i></i>
-        <span>Thích</span>
-      </div>
-      <div class="Comment">
-        <i
-          style="
-            background-image: url('https://static.xx.fbcdn.net/rsrc.php/v3/y7/r/cPbPIy60-oB.png');
-            background-position: 0px -366px;
-            background-size: 26px 874px;
-            width: 18px;
-            height: 18px;
-            background-repeat: no-repeat;
-            display: inline-block;
-          "
-        ></i>
-        <span>Bình luận</span>
-      </div>
-      <div class="Share">
-        <i
-          style="
-            background-image: url('https://static.xx.fbcdn.net/rsrc.php/v3/y7/r/cPbPIy60-oB.png');
-            background-position: 0px -426px;
-            background-size: 26px 874px;
-            width: 18px;
-            height: 18px;
-            background-repeat: no-repeat;
-            display: inline-block;
-          "
-        ></i>
-        <span>Chia sẻ</span>
-      </div>
-    </div>
-  </div>
-</div>`;
-}
+
 async function loadPostItem(posts) {
   let mainWebContent_button = document.querySelector("#btn_XemThem");
   mainWebContent_button.className = "displaynone";
@@ -160,14 +33,17 @@ async function loadPostItem(posts) {
   for (let index = 0; index < posts.length; index++) {
     let post = new Post(posts[index]);
     const item = await Promise.all([
-      TopItem(post),
-      CenterItem(post),
-      BotItem(post),
+      postElement.TopItem(post),
+      postElement.CenterItem(post),
+      postElement.BotItem(post),
     ]);
     var root = document.querySelector("#ListPost");
     const newElement = document.createElement("div");
     newElement.className = "Post-Item";
-    newElement.innerHTML = item.join("");
+    newElement.appendChild(item[0]);
+    newElement.appendChild(item[1]);
+    newElement.appendChild(item[2]);
+
     root.appendChild(newElement);
   }
 }
@@ -226,13 +102,9 @@ async function main() {
     trang++;
   });
   BlurFor_header_search_input();
-  let friends = await fetchData(
-    `http://localhost:8000/friendship?id=${username}`
-  );
+  let friends = await FriendController.getListFriendbyUsername(username);
   LoadFriend(friends);
-  let userProfile = await fetchData(
-    `http://localhost:8000/Profile/findone?id=${username}`
-  );
+  let userProfile = await UserController.FindOne(username);
   Load(userProfile);
   let posts = await fetchData(`http://localhost:8000/data/api/post/trang?id=0`);
   loadPostItem(posts)

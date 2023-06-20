@@ -18,6 +18,12 @@ export const UserController = {
       body: JSON.stringify(data),
     });
   },
+  FindOne: async (username) => {
+    let userProfile = await fetchData(
+      `http://localhost:8000/Profile/findone?id=${username}`
+    );
+    return userProfile;
+  },
 };
 
 export default class User {

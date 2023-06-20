@@ -1,13 +1,19 @@
 async function fetchData(coursAPI, data) {
   try {
     const response = await fetch(coursAPI, data);
+    if (response.status === 500) {
+      response = await fetch(coursAPI, data);
+    }
     const result = await response.json();
     return result;
   } catch (error) {
     console.log(error);
   }
 }
-class Post {
+export const PostController = {
+  getPost: async () => {},
+};
+export default class Post {
   constructor(obj) {
     this.ID = obj.Id;
     this.ProfileID = obj.ProfileID;
@@ -60,9 +66,10 @@ class Post {
   }
   async AddLike(userID) {
     const data = {
-      postId: obj.postId,
+      postId: this.ID,
       userId: userID,
     };
+    console.log(data);
     fetch("http://localhost:8000/data/api/post/add/like", {
       method: "POST",
       headers: {
@@ -73,7 +80,7 @@ class Post {
   }
   async DeleteLike(userID) {
     const data = {
-      postId: obj.postId,
+      postId: this.ID,
       userId: userID,
     };
     fetch("http://localhost:8000/data/api/post/delete/like", {

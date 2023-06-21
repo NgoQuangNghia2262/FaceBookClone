@@ -91,7 +91,7 @@ async function main() {
       if (account.Password === password) {
         localStorage.setItem("username", username);
         if (account.Status === "activate") {
-          window.location.href = "../FormPost.html";
+          window.location.href = "../FormPost/FormPost.html";
         } else {
           activateAccount(account);
         }

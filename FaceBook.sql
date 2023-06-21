@@ -6,25 +6,24 @@ go
 
 create table UserProfile
 (
-	Id int identity primary key,
 	Img char(1000),
 	Name nvarchar(1000),
 	Address nvarchar(1000),
-	Phone char(10),
+	Phone char(10) primary key,
 	BirthDay DateTime
 )
 go
 
 create table FriendShip
 (
-	ProfileID1 int,
-	ProfileID2 int,
+	ProfileID1 char(10),
+	ProfileID2 char(10),
 	Relationship nvarchar(100) default N'Chờ Xác Nhận',
 
 	primary key (ProfileID1 ,ProfileID2 ),
 
-	Foreign key (ProfileID1) references UserProfile(ID),
-	Foreign key (ProfileID2) references UserProfile(ID),
+	Foreign key (ProfileID1) references UserProfile(Phone),
+	Foreign key (ProfileID2) references UserProfile(Phone),
 )
 go
 

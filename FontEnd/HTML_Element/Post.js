@@ -133,7 +133,7 @@ export const postElement = {
     await delay(2000);
     const htmlTop = `
       <div class="Header_Left">
-        <img src="./images/like.svg" alt="" />
+        <img src="../images/like.svg" alt="" />
         <span> ${likeCommentShare[0] ? `${likeCommentShare[0]}` : ``}</span>
       </div>
       <div class="Header_Right">

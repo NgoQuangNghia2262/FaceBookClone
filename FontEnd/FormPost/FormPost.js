@@ -1,19 +1,11 @@
-import { postElement } from "./HTML_Element/Post.js";
-import { FriendController } from "./DTO/Friend.js";
-import { UserController } from "./DTO/User.js";
-import Post, { PostController } from "./DTO/Post.js";
+import { postElement } from "../HTML_Element/Post.js";
+import { FriendElement } from "../HTML_Element/Friend.js";
+import Friend, { FriendController } from "../DTO/Friend.js";
+import User, { UserController } from "../DTO/User.js";
+import Post, { PostController } from "../DTO/Post.js";
 
 var username = localStorage.getItem("username");
 
-async function fetchData(coursAPI, data) {
-  try {
-    const response = await fetch(coursAPI, data);
-    const result = await response.json();
-    return result;
-  } catch (error) {
-    console.log(error);
-  }
-}
 function BlurFor_header_search_input() {
   var element = document.querySelector("#header_search_input");
   var history = document.querySelector(".HistorySearch");
@@ -67,20 +59,13 @@ function Load(userProfile) {
 function LoadFriend(friends) {
   var root = document.querySelector("#list-friend");
   friends.forEach((friend) => {
-    const newElement = document.createElement("div");
-    newElement.className = "Friend";
-    newElement.innerHTML = `
-        <img src="${friend.Img}" alt="" />
-        <span>${friend.Name}</span>
-    `;
+    const newElement = FriendElement.element(friend);
     root.appendChild(newElement);
   });
 }
 let trang = 1;
 async function loadMorePosts(trang) {
-  let posts = await fetchData(
-    `http://localhost:8000/data/api/post/trang?id=${trang}`
-  );
+  let posts = await PostController.getPost(trang);
   if (!posts) {
     return;
   }
@@ -106,7 +91,7 @@ async function main() {
   LoadFriend(friends);
   let userProfile = await UserController.FindOne(username);
   Load(userProfile);
-  let posts = await fetchData(`http://localhost:8000/data/api/post/trang?id=0`);
+  let posts = await PostController.getPost(0);
   loadPostItem(posts)
     .then()
     .catch()

@@ -11,7 +11,12 @@ async function fetchData(coursAPI, data) {
   }
 }
 export const PostController = {
-  getPost: async () => {},
+  getPost: async (trang) => {
+    let posts = await fetchData(
+      `http://localhost:8000/data/api/post/trang?id=${trang}`
+    );
+    return posts;
+  },
 };
 export default class Post {
   constructor(obj) {

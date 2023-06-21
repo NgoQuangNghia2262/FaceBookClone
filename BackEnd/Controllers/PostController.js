@@ -108,7 +108,9 @@ const PostController = {
         res
           .status(200)
           .send(
-            JSON.stringify("../BackEnd/public/images/" + file.originalFilename)
+            JSON.stringify(
+              "../../BackEnd/public/images/" + file.originalFilename
+            )
           );
       });
     });

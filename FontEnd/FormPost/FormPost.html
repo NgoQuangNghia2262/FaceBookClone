@@ -17,344 +17,24 @@
       function delay(ms) {
         return new Promise((resolve) => setTimeout(resolve, ms));
       }
+      async function fetchData(coursAPI, data) {
+        try {
+          const response = await fetch(coursAPI, data);
+          if (response.status === 500) {
+            response = await fetch(coursAPI, data);
+          }
+          const result = await response.json();
+          return result;
+        } catch (error) {
+          console.log(error);
+        }
+      }
     </script>
-    <header class="header">
-      <div class="HeaderContainer">
-        <div class="HeaderContainer_Item Logo">
-          <a href="#">
-            <svg
-              aria-label="Logo Facebook"
-              class="x1ujvgzy"
-              role="img"
-              viewBox="0 0 120 24"
-              width="120"
-              style="fill: #1877f2"
-            >
-              <path
-                d="m109.202 14.864 4.404-7.03h4.746l-4.622 7.278 4.808 7.463h-4.746l-4.59-7.215v7.215h-4.467V.433l4.467-.402v14.833ZM98.596 14.524c0-1.951-.807-3.5-2.885-3.5s-2.885 1.549-2.885 3.5v1.363c0 1.95.807 3.499 2.885 3.499s2.885-1.549 2.885-3.5v-1.362ZM88.36 15.577v-.743c0-4.243 2.42-7.309 7.351-7.309s7.351 3.066 7.351 7.309v.743c0 4.242-2.42 7.308-7.351 7.308-4.932 0-7.351-3.066-7.351-7.308ZM82.406 14.524c0-1.951-.807-3.5-2.884-3.5-2.079 0-2.885 1.549-2.885 3.5v1.363c0 1.95.806 3.499 2.885 3.499 2.077 0 2.884-1.549 2.884-3.5v-1.362Zm-10.235 1.053v-.743c0-4.243 2.419-7.309 7.35-7.309 4.932 0 7.352 3.066 7.352 7.309v.743c0 4.242-2.42 7.308-7.352 7.308-4.931 0-7.35-3.066-7.35-7.308ZM66.216 14.648c0-2.075-.806-3.623-2.946-3.623-1.83 0-2.823 1.3-2.823 3.406v1.548c0 2.106.993 3.407 2.823 3.407 2.14 0 2.946-1.549 2.946-3.623v-1.115Zm4.467 1.022c0 4.118-1.985 7.215-6.08 7.215-2.233 0-3.783-1.115-4.404-2.539v2.23h-4.218V.434L60.447.03v9.848c.651-1.3 2.078-2.354 4.157-2.354 4.094 0 6.079 3.097 6.079 7.216v.929ZM44.723 13.843h5.397v-.372c0-1.61-.651-2.88-2.606-2.88-2.016 0-2.791 1.27-2.791 3.252m-4.466 1.92v-1.301c0-4.18 2.388-6.937 7.257-6.937 4.59 0 6.607 2.787 6.607 6.875v2.353h-9.398c.093 2.014.992 2.912 3.474 2.912 1.675 0 3.443-.341 4.745-.898l.807 3.065c-1.179.62-3.598 1.084-5.738 1.084-5.645 0-7.754-2.818-7.754-7.153M35.388 7.525c1.737 0 3.38.372 4.28.991l-.992 3.159c-.683-.34-1.8-.682-2.978-.682-2.42 0-3.474 1.394-3.474 3.778v.868c0 2.384 1.055 3.778 3.474 3.778 1.179 0 2.295-.34 2.978-.682l.992 3.16c-.9.618-2.543.99-4.28.99-5.242 0-7.63-2.818-7.63-7.34v-.68c0-4.522 2.388-7.34 7.63-7.34M15.973 15.732c0 2.198.806 3.654 2.884 3.654 1.83 0 2.76-1.332 2.76-3.438v-1.486c0-2.106-.93-3.437-2.76-3.437-2.078 0-2.884 1.455-2.884 3.654v1.053Zm-4.467-.991c0-4.119 1.954-7.216 6.049-7.216 2.233 0 3.598 1.146 4.249 2.57v-2.26h4.28v14.74h-4.28v-2.23c-.62 1.425-2.016 2.54-4.25 2.54-4.094 0-6.048-3.097-6.048-7.215v-.93ZM9.274 3.592c-1.396 0-1.8.62-1.8 1.982v2.26h3.723l-.372 3.655h-3.35v11.086H3.009V11.49H0V7.835h3.009V5.636C3.009 1.951 4.497 0 8.654 0c.9 0 1.954.062 2.605.155v3.437H9.274Z"
-              ></path>
-            </svg>
-          </a>
-        </div>
-        <div class="HeaderContainer_Item Search">
-          <form action="" method="post" style="width: 100%">
-            <input
-              id="header_search_input"
-              type="text"
-              placeholder="Tìm kiếm trên Facebook"
-            />
-            <div class="HistorySearch displaynone">
-              <div style="margin-top: 0">
-                <h3>Tìm kiếm gần đây</h3>
-                <a href="">Chỉnh sửa</a>
-              </div>
-              <div class="HistorySearch-item">
-                <div>
-                  <img src="../images/R (1).jpeg" alt="" />
-                  <span>Nghĩa Nghĩa</span>
-                </div>
-                <i
-                  data-visualcompletion="css-img"
-                  class="x1b0d499 x1d69dk1"
-                  style="
-                    background-image: url('https://static.xx.fbcdn.net/rsrc.php/v3/yS/r/29tRnTAs8yJ.png');
-                    background-position: -154px -154px;
-                    background-size: 190px 186px;
-                    width: 12px;
-                    height: 12px;
-                  "
-                ></i>
-              </div>
-              <div class="HistorySearch-item">
-                <div>
-                  <img src="../images/R (1).jpeg" alt="" />
-                  <span>Nghĩa Nghĩa</span>
-                </div>
-                <i
-                  data-visualcompletion="css-img"
-                  class="x1b0d499 x1d69dk1"
-                  style="
-                    background-image: url('https://static.xx.fbcdn.net/rsrc.php/v3/yS/r/29tRnTAs8yJ.png');
-                    background-position: -154px -154px;
-                    background-size: 190px 186px;
-                    width: 12px;
-                    height: 12px;
-                  "
-                ></i>
-              </div>
-              <div class="HistorySearch-item">
-                <div>
-                  <img src="../images/R (1).jpeg" alt="" />
-                  <span>Nghĩa Nghĩa</span>
-                </div>
-                <i
-                  data-visualcompletion="css-img"
-                  class="x1b0d499 x1d69dk1"
-                  style="
-                    background-image: url('https://static.xx.fbcdn.net/rsrc.php/v3/yS/r/29tRnTAs8yJ.png');
-                    background-position: -154px -154px;
-                    background-size: 190px 186px;
-                    width: 12px;
-                    height: 12px;
-                  "
-                ></i>
-              </div>
-              <div class="HistorySearch-item">
-                <div>
-                  <img src="../images/R (1).jpeg" alt="" />
-                  <span>Nghĩa Nghĩa</span>
-                </div>
-                <i
-                  data-visualcompletion="css-img"
-                  class="x1b0d499 x1d69dk1"
-                  style="
-                    background-image: url('https://static.xx.fbcdn.net/rsrc.php/v3/yS/r/29tRnTAs8yJ.png');
-                    background-position: -154px -154px;
-                    background-size: 190px 186px;
-                    width: 12px;
-                    height: 12px;
-                  "
-                ></i>
-              </div>
-              <div class="HistorySearch-item">
-                <div>
-                  <img src="../images/R (1).jpeg" alt="" />
-                  <span>Nghĩa Nghĩa</span>
-                </div>
-                <i
-                  data-visualcompletion="css-img"
-                  class="x1b0d499 x1d69dk1"
-                  style="
-                    background-image: url('https://static.xx.fbcdn.net/rsrc.php/v3/yS/r/29tRnTAs8yJ.png');
-                    background-position: -154px -154px;
-                    background-size: 190px 186px;
-                    width: 12px;
-                    height: 12px;
-                  "
-                ></i>
-              </div>
-              <div class="HistorySearch-item">
-                <div>
-                  <img src="../images/R (1).jpeg" alt="" />
-                  <span>Nghĩa Nghĩa</span>
-                </div>
-                <i
-                  data-visualcompletion="css-img"
-                  class="x1b0d499 x1d69dk1"
-                  style="
-                    background-image: url('https://static.xx.fbcdn.net/rsrc.php/v3/yS/r/29tRnTAs8yJ.png');
-                    background-position: -154px -154px;
-                    background-size: 190px 186px;
-                    width: 12px;
-                    height: 12px;
-                  "
-                ></i>
-              </div>
-            </div>
-          </form>
-        </div>
-        <div class="HeaderContainer_Item User">
-          <div class="Message">
-            <svg
-              viewBox="0 0 28 28"
-              alt=""
-              class="x1lliihq x1k90msu x2h7rmj x1qfuztq x198g3q0"
-              fill="currentColor"
-              height="20"
-              width="20"
-            >
-              <path
-                d="M14 2.042c6.76 0 12 4.952 12 11.64S20.76 25.322 14 25.322a13.091 13.091 0 0 1-3.474-.461.956 .956 0 0 0-.641.047L7.5 25.959a.961.961 0 0 1-1.348-.849l-.065-2.134a.957.957 0 0 0-.322-.684A11.389 11.389 0 0 1 2 13.682C2 6.994 7.24 2.042 14 2.042ZM6.794 17.086a.57.57 0 0 0 .827.758l3.786-2.874a.722.722 0 0 1 .868 0l2.8 2.1a1.8 1.8 0 0 0 2.6-.481l3.525-5.592a.57.57 0 0 0-.827-.758l-3.786 2.874a.722.722 0 0 1-.868 0l-2.8-2.1a1.8 1.8 0 0 0-2.6.481Z"
-              ></path>
-            </svg>
-          </div>
-          <div class="Notification">
-            <svg
-              viewBox="0 0 28 28"
-              alt=""
-              class="x1lliihq x1k90msu x2h7rmj x1qfuztq x198g3q0"
-              fill="currentColor"
-              height="20"
-              width="20"
-            >
-              <path
-                d="M7.847 23.488C9.207 23.488 11.443 23.363 14.467 22.806 13.944 24.228 12.581 25.247 10.98 25.247 9.649 25.247 8.483 24.542 7.825 23.488L7.847 23.488ZM24.923 15.73C25.17 17.002 24.278 18.127 22.27 19.076 21.17 19.595 18.724 20.583 14.684 21.369 11.568 21.974 9.285 22.113 7.848 22.113 7.421 22.113 7.068 22.101 6.79 22.085 4.574 21.958 3.324 21.248 3.077 19.976 2.702 18.049 3.295 17.305 4.278 16.073L4.537 15.748C5.2 14.907 5.459 14.081 5.035 11.902 4.086 7.022 6.284 3.687 11.064 2.753 15.846 1.83 19.134 4.096 20.083 8.977 20.506 11.156 21.056 11.824 21.986 12.355L21.986 12.356 22.348 12.561C23.72 13.335 24.548 13.802 24.923 15.73Z"
-              ></path>
-            </svg>
-          </div>
-          <div class="Account">
-            <img
-              id="AnhDaiDien"
-              src="../images/R (1).jpeg"
-              alt=""
-              style="width: 100%; height: 100%; border-radius: 20px"
-            />
-          </div>
-          <div class="Account_CaNhan displaynone">
-            <div class="header_Account_CaNhan">
-              <div class="header_Account_CaNhan-item1">
-                <img
-                  id="AnhDaiDien3"
-                  src="../images/anh-dai-dien-chibi-cute_104205129.jpg"
-                  alt=""
-                />
-                <span>Nghĩa Nghĩa</span>
-              </div>
-              <div class="header_Account_CaNhan-item2">
-                <span><b>Xem tất cả trang cá nhân</b></span>
-              </div>
-            </div>
-
-            <div class="option">
-              <div class="Account_CaNhan-item">
-                <div class="icon">
-                  <i
-                    style="
-                      background-image: url('https://static.xx.fbcdn.net/rsrc.php/v3/yn/r/9TbszPwJYOK.png');
-                      background-position: -110px -110px;
-                      background-size: 190px 186px;
-                      width: 20px;
-                      height: 20px;
-                      background-repeat: no-repeat;
-                      display: inline-block;
-                    "
-                  ></i>
-                </div>
-                <span>Cài đặt & quyền riêng tư</span>
-                <i
-                  style="
-                    background-image: url('https://static.xx.fbcdn.net/rsrc.php/v3/yn/r/9TbszPwJYOK.png');
-                    background-position: -112px -28px;
-                    background-size: 190px 186px;
-                    width: 24px;
-                    height: 24px;
-                    margin-left: 70px;
-                  "
-                ></i>
-              </div>
-              <div class="Account_CaNhan-item">
-                <div class="icon">
-                  <i
-                    data-visualcompletion="css-img"
-                    class="x1b0d499 xep6ejk"
-                    style="
-                      background-image: url('https://static.xx.fbcdn.net/rsrc.php/v3/yX/r/jRKOGvZEHns.png');
-                      background-position: 0px -332px;
-                      background-size: 42px 464px;
-                      width: 20px;
-                      height: 20px;
-                      background-repeat: no-repeat;
-                      display: inline-block;
-                    "
-                  ></i>
-                </div>
-                <span>Trợ giúp & hỗ trợ</span>
-                <i
-                  style="
-                    background-image: url('https://static.xx.fbcdn.net/rsrc.php/v3/yn/r/9TbszPwJYOK.png');
-                    background-position: -112px -28px;
-                    background-size: 190px 186px;
-                    width: 24px;
-                    height: 24px;
-                    margin-left: 115px;
-                  "
-                ></i>
-              </div>
-              <div class="Account_CaNhan-item">
-                <div class="icon">
-                  <i
-                    data-visualcompletion="css-img"
-                    class="x1b0d499 xep6ejk"
-                    style="
-                      background-image: url('https://static.xx.fbcdn.net/rsrc.php/v3/yx/r/CDtr6P_Uyhu.png');
-                      background-position: 0px -202px;
-                      background-size: 26px 620px;
-                      width: 20px;
-                      height: 20px;
-                      background-repeat: no-repeat;
-                      display: inline-block;
-                    "
-                  ></i>
-                </div>
-                <span>Màn hình & trợ năng</span>
-                <i
-                  style="
-                    background-image: url('https://static.xx.fbcdn.net/rsrc.php/v3/yn/r/9TbszPwJYOK.png');
-                    background-position: -112px -28px;
-                    background-size: 190px 186px;
-                    width: 24px;
-                    height: 24px;
-                    margin-left: 90px;
-                  "
-                ></i>
-              </div>
-              <div class="Account_CaNhan-item">
-                <div class="icon">
-                  <i
-                    data-visualcompletion="css-img"
-                    class="x1b0d499 xep6ejk"
-                    style="
-                      background-image: url('https://static.xx.fbcdn.net/rsrc.php/v3/yX/r/jRKOGvZEHns.png');
-                      background-position: 0px -156px;
-                      background-size: 42px 464px;
-                      width: 20px;
-                      height: 20px;
-                      background-repeat: no-repeat;
-                      display: inline-block;
-                    "
-                  ></i>
-                </div>
-                <span>Đóng góp ý kiến</span>
-              </div>
-              <a href="./FormLogIn/FormLogIn.html">
-                <div class="Account_CaNhan-item">
-                  <div class="icon">
-                    <i
-                      style="
-                        background-image: url('https://static.xx.fbcdn.net/rsrc.php/v3/yr/r/TZSWLqRaW74.png');
-                        background-position: 0px -336px;
-                        background-size: 26px 664px;
-                        width: 20px;
-                        height: 20px;
-                      "
-                    ></i>
-                  </div>
-                  <span>Đăng xuất</span>
-                </div>
-              </a>
-            </div>
-          </div>
-          <script>
-            var element = document.querySelector(
-              ".header .HeaderContainer .User .Account"
-            );
-            var elementOption = document.querySelector(
-              ".header .HeaderContainer .User .Account_CaNhan"
-            );
-            element.addEventListener("click", function (event) {
-              if (elementOption.classList.contains("displaynone")) {
-                elementOption.classList.remove("displaynone");
-              } else {
-                elementOption.classList.add("displaynone");
-              }
-            });
-            // Sự kiện click ra ngoài phần tử
-            document.addEventListener("click", function (event) {
-              if (!element.contains(event.target)) {
-                elementOption.classList.add("displaynone");
-              }
-            });
-          </script>
-        </div>
-      </div>
-    </header>
     <nav class="WebContent Left">
       <div class="Container_Left">
         <div class="Container_Left-Item">
           <div>
             <i
-              data-visualcompletion="css-img"
-              class="x1b0d499 xi3auck"
               style="
                 background-image: url('https://static.xx.fbcdn.net/rsrc.php/v3/yS/r/0eUpMp-7pYy.png');
                 background-position: 0 0;
@@ -368,7 +48,7 @@
             <span>Trang chủ</span>
           </div>
           <div>
-            <img id="AnhDaiDien2" src="../images/R (1).jpeg" alt="" />
+            <img id="AnhDaiDien2" src="../images/R (1).jpeg" />
             <span id="Name2">Nghĩa Nghĩa</span>
           </div>
         </div>
@@ -423,7 +103,6 @@
           <div>
             <img
               src="../images/trochoi.png"
-              alt=""
               style="width: 24px; height: 24px"
             />
             <span>Trò chơi</span>
@@ -448,57 +127,39 @@
         <div class="Container_Left-Item">
           <div>
             <div class="Container_Left-Item-DivDefault">
-              <img
-                src="../images/anh-dai-dien-chibi-cute_104205129.jpg"
-                alt=""
-              />
+              <img src="../images/anh-dai-dien-chibi-cute_104205129.jpg" />
             </div>
             <span>Lối tắt 1</span>
           </div>
           <div>
             <div class="Container_Left-Item-DivDefault">
-              <img
-                src="../images/anh-dai-dien-chibi-cute_104205129.jpg"
-                alt=""
-              />
+              <img src="../images/anh-dai-dien-chibi-cute_104205129.jpg" />
             </div>
-            <span>Lối tắt 1</span>
+            <span>Lối tắt 2</span>
           </div>
           <div>
             <div class="Container_Left-Item-DivDefault">
-              <img
-                src="../images/anh-dai-dien-chibi-cute_104205129.jpg"
-                alt=""
-              />
+              <img src="../images/anh-dai-dien-chibi-cute_104205129.jpg" />
             </div>
-            <span>Lối tắt 1</span>
+            <span>Lối tắt 3</span>
           </div>
           <div>
             <div class="Container_Left-Item-DivDefault">
-              <img
-                src="../images/anh-dai-dien-chibi-cute_104205129.jpg"
-                alt=""
-              />
+              <img src="../images/anh-dai-dien-chibi-cute_104205129.jpg" />
             </div>
-            <span>Lối tắt 1</span>
+            <span>Lối tắt 4</span>
           </div>
           <div>
             <div class="Container_Left-Item-DivDefault">
-              <img
-                src="../images/anh-dai-dien-chibi-cute_104205129.jpg"
-                alt=""
-              />
+              <img src="../images/anh-dai-dien-chibi-cute_104205129.jpg" />
             </div>
-            <span>Lối tắt 1</span>
+            <span>Lối tắt 5</span>
           </div>
           <div>
             <div class="Container_Left-Item-DivDefault">
-              <img
-                src="../images/anh-dai-dien-chibi-cute_104205129.jpg"
-                alt=""
-              />
+              <img src="../images/anh-dai-dien-chibi-cute_104205129.jpg" />
             </div>
-            <span>Lối tắt 1</span>
+            <span>Lối tắt 6</span>
           </div>
           <div>
             <div class="Container_Left-Item-DivDefault">
@@ -521,19 +182,13 @@
         <div class="Container_Left-Item">
           <div>
             <div class="Container_Left-Item-DivDefault">
-              <img
-                src="../images/anh-dai-dien-chibi-cute_104205129.jpg"
-                alt=""
-              />
+              <img src="../images/anh-dai-dien-chibi-cute_104205129.jpg" />
             </div>
             <span>Lối tắt 1</span>
           </div>
           <div>
             <div class="Container_Left-Item-DivDefault">
-              <img
-                src="../images/anh-dai-dien-chibi-cute_104205129.jpg"
-                alt=""
-              />
+              <img src="../images/anh-dai-dien-chibi-cute_104205129.jpg" />
             </div>
             <span>Lối tắt 1</span>
           </div>
@@ -594,35 +249,20 @@
       </div>
       <div class="CratePost">
         <div class="CratePost_Top">
-          <img src="../images/R (1).jpeg" alt="" />
+          <img src="../images/R (1).jpeg" />
           <input type="text" placeholder="Nghĩa ơi , Bạn đang nghĩ gì thế ?" />
         </div>
         <div class="CratePost_Bot">
           <div class="CratePost_Bot-Item">
-            <img
-              src="../images/v1iF2605Cb5.png"
-              alt=""
-              width="24px"
-              height="24px"
-            />
+            <img src="../images/v1iF2605Cb5.png" width="24px" height="24px" />
             <span>Video trực tiếp</span>
           </div>
           <div class="CratePost_Bot-Item">
-            <img
-              src="../images/a6OjkIIE-R0.png"
-              alt=""
-              width="24px"
-              height="24px"
-            />
+            <img src="../images/a6OjkIIE-R0.png" width="24px" height="24px" />
             <span>Ảnh/Video</span>
           </div>
           <div class="CratePost_Bot-Item">
-            <img
-              src="../images/yMDS19UDsWe.png"
-              alt=""
-              width="24px"
-              height="24px"
-            />
+            <img src="../images/yMDS19UDsWe.png" width="24px" height="24px" />
             <span>Cảm xúc/Hoạt động</span>
           </div>
         </div>
@@ -853,7 +493,7 @@
         <div class="FormCreatePost_User">
           <div>
             <a href="">
-              <img src="../images/anhdd1.jpg" alt="" />
+              <img src="../images/anhdd1.jpg" />
             </a>
           </div>
           <div>
@@ -863,11 +503,8 @@
                 id="the_object_of_the_article"
                 class="the_object_of_the_article"
               >
-                <img
-                  style="width: 12px; height: 12px"
-                  src="../images/bXBYraHyR0S.png"
-                  alt="Chỉ mình tôi"
-                />
+                <img style="width: 12px; height: 12px"
+                src="../images/bXBYraHyR0S.png" hỉ mình tôi" />
                 <span>Chỉ mình tôi</span>
                 <i
                   style="
@@ -883,11 +520,8 @@
               </div>
               <div class="subMenu_the_object_of_the_article displaynone">
                 <div class="the_object_of_the_article">
-                  <img
-                    style="width: 12px; height: 12px"
-                    src="../images/bXBYraHyR0S.png"
-                    alt="Chỉ mình tôi"
-                  />
+                  <img style="width: 12px; height: 12px"
+                  src="../images/bXBYraHyR0S.png" hỉ mình tôi" />
                   <span>Chỉ mình tôi</span>
                   <i
                     style="
@@ -902,11 +536,8 @@
                   ></i>
                 </div>
                 <div class="the_object_of_the_article">
-                  <img
-                    style="width: 12px; height: 12px"
-                    src="../images/bXBYraHyR0S.png"
-                    alt="Chỉ mình tôi"
-                  />
+                  <img style="width: 12px; height: 12px"
+                  src="../images/bXBYraHyR0S.png" hỉ mình tôi" />
                   <span>Bạn bè</span>
                   <i
                     style="
@@ -921,11 +552,8 @@
                   ></i>
                 </div>
                 <div class="the_object_of_the_article">
-                  <img
-                    style="width: 12px; height: 12px"
-                    src="../images/bXBYraHyR0S.png"
-                    alt="Chỉ mình tôi"
-                  />
+                  <img style="width: 12px; height: 12px"
+                  src="../images/bXBYraHyR0S.png" hỉ mình tôi" />
                   <span>Công khai</span>
                   <i
                     style="
@@ -983,7 +611,7 @@
           <textarea placeholder="Nghĩa ơi, bạn đang nghĩ gì thế ?"></textarea>
           <div class="FormCreatePost_Content_UpLoad displaynone">
             <div class="FormCreatePost_Content_UpLoad-Top">
-              <img src="" alt="" />
+              <img src="" />
               <input type="file" name="file" />
               <div class="UpLoad-Top-icon">
                 <i
@@ -1020,7 +648,6 @@
             <img
               style="width: 38px; height: 38px"
               src="../images/SATP_Aa_square-2x.png"
-              alt=""
             />
             <i
               style="
@@ -1077,11 +704,11 @@
               >Thêm vào bài viết của bạn</span
             >
             <div class="FormCreatePost_ListIcon">
-              <img class="upload" src="../images/a6OjkIIE-R0.png" alt="" />
-              <img src="../images/MqTJr_DM3Jg.png" alt="" />
-              <img src="../images/yMDS19UDsWe.png" alt="" />
-              <img src="../images/uywzfiZad5N.png" alt="" />
-              <img src="../images/j0Jp-GpONWx.png" alt="" />
+              <img class="upload" src="../images/a6OjkIIE-R0.png" />
+              <img src="../images/MqTJr_DM3Jg.png" />
+              <img src="../images/yMDS19UDsWe.png" />
+              <img src="../images/uywzfiZad5N.png" />
+              <img src="../images/j0Jp-GpONWx.png" />
               <i
                 data-visualcompletion="css-img"
                 class="x1b0d499 xl1xv1r"

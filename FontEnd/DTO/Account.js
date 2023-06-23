@@ -15,6 +15,12 @@ export default class Account {
     this.KeyActivate = obj.KeyActivate.trim();
     this.Status = obj.status.trim();
   }
+  static async FindOne(username) {
+    let account = await fetchData(
+      `http://localhost:8000/data/api/account/${username}`
+    );
+    return new Account(account[0]);
+  }
 }
 export const AccountController = {
   FindAll: async () => {

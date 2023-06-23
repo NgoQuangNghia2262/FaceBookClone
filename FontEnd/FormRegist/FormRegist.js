@@ -1,5 +1,5 @@
 import { AccountController } from "../DTO/Account.js";
-import { UserController } from "../DTO/User.js";
+import User from "../DTO/User.js";
 
 async function main() {
   let button = document.querySelector(".container_button button");
@@ -15,7 +15,7 @@ async function main() {
         Address: inputs[4].value,
         KeyActivate: KeyActivate,
       };
-      await UserController.RegistUser(data);
+      await User.RegistUser(data);
       await AccountController.RegistAccount(data);
     }
   });

@@ -67,6 +67,27 @@ const Share = () => {
   return newElement;
 };
 
+export const finallyPost = async (post) => {
+  const item = await Promise.all([
+    postElement.TopItem(post),
+    postElement.CenterItem(post),
+    postElement.BotItem(post),
+  ]);
+  const newElement = document.createElement("div");
+  newElement.className = "Post-Item";
+  newElement.style = `
+    width: 100%;
+    border-radius: 10px;
+    background-color: #ffffff;
+    margin: 20px 0;
+    box-shadow: 0px 1px 6px rgba(0, 0, 0, 0.2);`;
+  newElement.appendChild(item[0]);
+  newElement.appendChild(item[1]);
+  newElement.appendChild(item[2]);
+
+  return newElement;
+};
+
 export const postElement = {
   TopItem: async (post) => {
     const userProfile = await post.getUser();
@@ -101,6 +122,14 @@ export const postElement = {
     const newElement = document.createElement("div");
     newElement.className = "Post-Item-Top";
     newElement.innerHTML = html;
+    newElement.style = `
+      width: 100%;
+      padding: 15px;
+      padding-bottom: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center ;
+    `;
     return newElement;
   },
   CenterItem: async (post) => {

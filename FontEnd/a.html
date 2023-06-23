@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      a {
+        text-decoration: none;
+        color: black;
+      }
+      body {
+        font-family: "Montserrat", sans-serif;
+        font-size: 14px;
+        background-color: #f0f2f5;
+      }
+
+      span {
+        font-family: inherit;
+      }
+      .option-item {
+        padding: 5px 13px;
+        display: flex;
+        height: 52px;
+        align-items: center;
+      }
+      .option .option-item:hover {
+        background-color: rgba(0, 0, 0, 0.06);
+        border-radius: 10px;
+        cursor: pointer;
+      }
+      .option-item .icon {
+        width: 36px;
+        height: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background-color: #e4e6eb;
+        margin-right: 10px;
+      }
+      .option-item span {
+        font-size: 15px;
+        font-weight: 400;
+        margin-left: 10px;
+      }
+      .HistorySearch div {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .HistorySearch-item img {
+        width: 36px;
+        height: 36px;
+        border-radius: 17px;
+      }
+      .HistorySearch-item span {
+        margin-left: 15px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="root"></div>
+    <script type="module" src="./s.js"></script>
+  </body>
+</html>

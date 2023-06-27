@@ -87,7 +87,13 @@ export const finallyPost = async (post) => {
 
   return newElement;
 };
-
+export const ListPost = (posts) => {
+  const ListPost = document.createElement("div");
+  ListPost.id = "ListPost";
+  ListPost.className = "ListPost";
+  ListPost.style = `width: 100%`;
+  return ListPost;
+};
 export const postElement = {
   TopItem: async (post) => {
     const userProfile = await post.getUser();
@@ -150,11 +156,11 @@ export const postElement = {
     return newElement;
   },
   BotItem: async (post) => {
-    const likeCommentShare = await Promise.all([
+    const likeComment = await Promise.all([
       post.CountLike(),
       post.CountComment(),
-      post.CountShare(),
     ]);
+    const share = await post.CountShare();
     //Phải tách promies này ra vì hình như nó xayra hiện tượng look table bên DB
     //Hiện tượng này dẫn đến câu truy vấn bị hủy
     //3 cái trên cũng bị như vậy nhưng tần số rất ít
@@ -163,19 +169,15 @@ export const postElement = {
     const htmlTop = `
       <div class="Header_Left">
         <img src="../images/like.svg" alt="" />
-        <span> ${likeCommentShare[0] ? `${likeCommentShare[0]}` : ``}</span>
+        <span> ${likeComment[0] ? `${likeComment[0]}` : ``}</span>
       </div>
       <div class="Header_Right">
         ${
-          likeCommentShare[2]
-            ? `<span style="margin-left : 10px;">${likeCommentShare[2]} lượt chia sẻ</span>`
+          share
+            ? `<span style="margin-left : 10px;">${share} lượt chia sẻ</span>`
             : ``
         }
-        ${
-          likeCommentShare[1]
-            ? `<span>${likeCommentShare[1]} bình luận</span>`
-            : ``
-        }
+        ${likeComment[1] ? `<span>${likeComment[1]} bình luận</span>` : ``}
       </div>
   `;
     const newElement = document.createElement("div");

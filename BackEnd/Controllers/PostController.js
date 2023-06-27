@@ -4,6 +4,18 @@ const fs = require("fs");
 const path = require("path");
 
 const PostController = {
+  getStorybyID: async (req, res) => {
+    try {
+      const query = `SELECT Top 1 *
+      FROM Post
+      where Category = 'story'
+      ORDER BY CreatedTime DESC`;
+      const result = await ExcuteQuery(query);
+      res.send(result);
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  },
   getTwoPost: async (req, res) => {
     try {
       const query = `SELECT *

@@ -20,7 +20,7 @@ export default class User {
     let userProfile = await fetchData(
       `http://localhost:8000/Profile/findone?id=${username}`
     );
-    return userProfile;
+    return new User(userProfile[0]);
   }
   static async RegistUser(data) {
     await fetchData("http://localhost:8000/Profile/register", {
@@ -31,4 +31,15 @@ export default class User {
       body: JSON.stringify(data),
     });
   }
+  async Friends() {
+    let data = await fetchData(
+      `http://localhost:8000/friendship?id=${this.Phone}`
+    );
+    const friends = data.map((friend) => {
+      return new User(friend);
+    });
+    return friends;
+  }
+  async Posts() {}
+  async Storys() {}
 }

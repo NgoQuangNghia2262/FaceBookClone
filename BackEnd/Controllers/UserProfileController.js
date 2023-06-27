@@ -4,7 +4,6 @@ const UserProfileController = {
   registerUser: async (req, res) => {
     try {
       const query = `insert into UserProfile values('../../BackEnd/public/images/OIP.jpeg', N'${req.body.Name}' , N'${req.body.Address}' , '${req.body.UserName}' ,  '${req.body.BirthDay}')`;
-      console.log(query);
       await ExcuteQuery(query);
       res.send("Successfuly !!");
     } catch (err) {
@@ -29,9 +28,9 @@ const UserProfileController = {
       res.status(500).json(err);
     }
   },
-  getUserByName: async (req, res) => {
+  getAllUserHaveName: async (req, res) => {
     try {
-      const query = `select Img,Name from UserProfile where Name like N'%${req.pramas.Name}%'`;
+      const query = `select * from UserProfile where Name like N'%${req.params.name}%'`;
       const result = await ExcuteQuery(query);
       res.send(result);
     } catch (err) {

@@ -4,14 +4,14 @@ const FriendShipController = {
   getUserProfile: async (req, res) => {
     try {
       const query = `
-        SELECT Name , Img
+        SELECT *
         FROM UserProfile
         INNER JOIN Friendship ON UserProfile.Phone = Friendship.ProfileID2
         WHERE Friendship.ProfileID1 = '${req.query.id}' AND Friendship.Relationship = 'Friend'
 
         UNION
 
-        SELECT Name , Img
+        SELECT *
         FROM UserProfile
         INNER JOIN Friendship ON UserProfile.Phone = Friendship.ProfileID1
         WHERE Friendship.ProfileID2 = '${req.query.id}' AND Friendship.Relationship = 'Friend';

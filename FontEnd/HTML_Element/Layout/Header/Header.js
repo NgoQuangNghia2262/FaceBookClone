@@ -1,10 +1,22 @@
 import { HistorySearchElement } from "../HistorySearch/HistorySearch.js";
 
+async function fetchData(coursAPI, data) {
+  try {
+    const response = await fetch(coursAPI, data);
+    if (response.status === 500) {
+      response = await fetch(coursAPI, data);
+    }
+    const result = await response.json();
+    return result;
+  } catch (error) {
+    console.log(error);
+  }
+}
 function Create_Even_For_ElementInput_In_HeaderCenter(inputElement) {
   const root = inputElement.parentNode;
+  const arrUser = JSON.parse(localStorage.getItem("HistorySearch"));
   inputElement.addEventListener("focus", () => {
-    const arrUser = localStorage.getItem("HistorySearch");
-    root.appendChild(HistorySearchElement.HistorySearch(JSON.parse(arrUser)));
+    root.appendChild(HistorySearchElement.HistorySearch(arrUser));
   });
   inputElement.addEventListener("blur", () => {
     root.removeChild(root.childNodes[2]);
@@ -12,9 +24,26 @@ function Create_Even_For_ElementInput_In_HeaderCenter(inputElement) {
   var timeoutId;
   inputElement.addEventListener("input", (event) => {
     clearTimeout(timeoutId);
-
-    timeoutId = setTimeout(function () {
-      var text = event.target.value;
+    timeoutId = setTimeout(async function () {
+      let text = event.target.value;
+      if (arrUser.length >= 4) {
+        arrUser.pop();
+      }
+      arrUser.push({
+        Img: "../images/5017679.png",
+        Name: text,
+      });
+      let jsonStr = JSON.stringify(arrUser);
+      localStorage.setItem("HistorySearch", jsonStr);
+      let Users = await fetchData(`http://localhost:8000/Profile/${text}`);
+      let HistorySearch = root.childNodes[2];
+      let HistorySearch_List = HistorySearch.querySelector(
+        ".HistorySearch_List"
+      );
+      HistorySearch.removeChild(HistorySearch_List);
+      HistorySearch.appendChild(
+        HistorySearchElement.arrHistorySearchItem(Users)
+      );
     }, 1000);
   });
 }
@@ -80,8 +109,7 @@ const Header_Right_Account = (User) => {
   Account.className = "Account";
   Account.innerHTML = `
     <img
-    id="AnhDaiDien"
-    src="../images/R (1).jpeg"
+    src="${User.Img}"
     style="width: 100%; height: 100%; border-radius: 20px"
     />
   `;
@@ -97,7 +125,7 @@ const Header_Right_Account = (User) => {
     margin-left: 10px;
     position: relative;
   `;
-  Account.addEventListener("click", (User) => {
+  Account.addEventListener("click", () => {
     const HeaderContainer_Item = document.querySelector(".User");
     const SubAccount = HeaderContainer_Item.querySelector(
       ".Header_Right_SubAccount"
@@ -105,7 +133,7 @@ const Header_Right_Account = (User) => {
     if (SubAccount) {
       HeaderContainer_Item.removeChild(SubAccount);
     } else {
-      HeaderContainer_Item.appendChild(Header_Right_SubAccount());
+      HeaderContainer_Item.appendChild(Header_Right_SubAccount(User));
     }
   });
   return Account;
@@ -133,8 +161,8 @@ const Header_Right_SubAccount = (User) => {
     ">
       <img 
       style = "width: 44px;height: 44px;border-radius: 50%;"
-      src="../images/anh-dai-dien-chibi-cute_104205129.jpg" />
-      <span style = "font-size: 16px;font-weight: 500;margin-left: 15px;">Nghĩa Nghĩa</span>
+      src="${User.Img}" />
+      <span style = "font-size: 16px;font-weight: 500;margin-left: 15px;">${User.Name}</span>
     </div>
     <div style = "margin : 10px 4px">
       <span style = "color: #1876f2;"><b>Xem tất cả trang cá nhân</b></span>
@@ -273,7 +301,7 @@ const Header_Right_SubAccount = (User) => {
 
   return SubAccount;
 };
-export const HeaderLayout = () => {
+export const HeaderLayout = (User) => {
   //ContainerHeader
   const HeaderContainer = document.createElement("div");
   HeaderContainer.className = "HeaderContainer";
@@ -287,7 +315,7 @@ export const HeaderLayout = () => {
   `;
   HeaderContainer.appendChild(HeaderElement.Left());
   HeaderContainer.appendChild(HeaderElement.Center());
-  HeaderContainer.appendChild(HeaderElement.Right());
+  HeaderContainer.appendChild(HeaderElement.Right(User));
 
   //Header
   const header = document.createElement("header");
@@ -378,7 +406,7 @@ export const HeaderElement = {
     `;
     newElement.appendChild(Header_Right_Message());
     newElement.appendChild(Header_Right_Notification());
-    newElement.appendChild(Header_Right_Account());
+    newElement.appendChild(Header_Right_Account(User));
 
     return newElement;
   },

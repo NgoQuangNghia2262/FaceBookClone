@@ -14,9 +14,9 @@ export const HistorySearchItem = (User) => {
   const newElement = document.createElement("div");
   newElement.className = "HistorySearch-item";
   newElement.innerHTML = `
-      <div>
-          <img src="../images/R (1).jpeg" />
-          <span>Nghĩa Nghĩa</span>
+      <div style = "margin : 5px 0">
+          <img src="${User.Img}" />
+          <span>${User.Name}</span>
       </div>
   `;
   newElement.appendChild(IconClose());
@@ -25,6 +25,7 @@ export const HistorySearchItem = (User) => {
 
 export const arrHistorySearchItem = (Users) => {
   const newElement = document.createElement("div");
+  newElement.className = "HistorySearch_List";
   if (Users) {
     if (Array.isArray(Users)) {
       Users.forEach((User) => {
@@ -50,7 +51,7 @@ export const HistorySearch = (Users) => {
     width: 100%;
     min-height: 200px;
     max-height: 300px;
-    top: 57px;
+    top: 50px;
     border-radius: 10px;
     background-color: #ffffff;
     padding: 20px;

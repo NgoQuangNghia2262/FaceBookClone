@@ -1,5 +1,5 @@
 import { StoryLayout } from "./Story.js";
-import { CratePostLayout } from "./CratePost.js";
+import { CratePostLayout } from "../../CreatePost/CratePost.js";
 import { TaoPhongHopMatLayOut } from "./TaoPhongHopMat.js";
 import { ListPost } from "../../../Post.js";
 

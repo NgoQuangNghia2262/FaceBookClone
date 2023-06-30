@@ -402,7 +402,7 @@ body .displaynone{
     align-items: center;
     margin: 15px 0;
 }
-/*FormTaoPost*/
+/*FormCreatePost*/
 .overlay {
     position: fixed;
     top: 0;
@@ -415,7 +415,7 @@ body .displaynone{
     justify-content: center;
     align-items: center;
   }
-.FormTaoPost{
+.FormCreatePost{
     width: 500px;
     background-color: #fff;
     position: absolute;
@@ -442,7 +442,7 @@ body .displaynone{
     margin-bottom: 5px;
     
 }
-body .FormTaoPost .FormCreatePost_Content{
+body .FormCreatePost .FormCreatePost_Content{
     padding-right: 5px;
     overflow-y: scroll;
     max-height: 300px;
@@ -479,7 +479,7 @@ body .FormTaoPost .FormCreatePost_Content{
     background-color:  rgba(0, 0, 0, 0.1);
     cursor: pointer;
   }
-  .close_FormTaoPost_Img{
+  .close_FormCreatePost_Img{
     display: flex;
     align-items: center;
     justify-content: center;
@@ -536,12 +536,12 @@ body .FormTaoPost .FormCreatePost_Content{
     cursor: pointer;
     margin-bottom: 5px;
 }
-.FormTaoPost > div{
+.FormCreatePost > div{
     padding: 15px;
     padding-top: 0;
 }
 
-.FormTaoPost > div > button{
+.FormCreatePost > div > button{
     width: 100%;
     background-color: #e4e6eb;
     border: none;
@@ -551,15 +551,17 @@ body .FormTaoPost .FormCreatePost_Content{
     height: 36px;
     border-radius: 5px;
 }
-.FormTaoPost .nonactivate > button{
+.FormCreatePost .nonactivate > button{
     background-color: #e4e6eb;
     cursor: not-allowed;
     color: #BCC0C4;
+    border-radius: 5px;
 }
-.FormTaoPost .activate > button{
+.FormCreatePost .activate > button{
     background-color:#1b74e4;
     cursor: pointer;
     color:#fff;
+    border-radius: 5px;
 }
 
 .FormCreatePost_ListIcon > img{
@@ -569,7 +571,7 @@ body .FormTaoPost .FormCreatePost_Content{
     cursor: pointer;
     
 }
-.close_FormTaoPost{
+.close_FormCreatePost{
     display: flex;
     align-items: center;
     justify-content: center;
@@ -582,7 +584,6 @@ body .FormTaoPost .FormCreatePost_Content{
     top: 15px;
     cursor: pointer;
     z-index: 999;
-   
 }
 .subMenu_the_object_of_the_article{
     

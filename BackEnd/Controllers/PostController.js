@@ -3,6 +3,9 @@ const formidable = require("formidable");
 const fs = require("fs");
 const path = require("path");
 
+function delay(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
 const PostController = {
   getStorybyID: async (req, res) => {
     try {
@@ -72,6 +75,7 @@ const PostController = {
   },
   AddLike: async (req, res) => {
     try {
+      await delay(1000);
       const query = `insert into tbLike values('${req.body.postId}' , '${req.body.userId}')`;
       await ExcuteQuery(query);
       res.send("Like");
@@ -90,6 +94,7 @@ const PostController = {
     }
   },
   UpLoadImg: async (req, res) => {
+    await delay(1000);
     const form = new formidable.IncomingForm();
     form.uploadDir = "public/images";
     form.keepExtensions = true;
@@ -117,6 +122,7 @@ const PostController = {
           if (err) throw err;
           console.log("File save success !!!");
         });
+        await delay(2000);
         res
           .status(200)
           .send(

@@ -3,6 +3,7 @@ import { WebContent_Center } from "./HTML_Element/Layout/WebContent/Center/WebCo
 import User from "./DTO/User.js";
 import Post, { PostController } from "./DTO/Post.js";
 import { finallyPost } from "./HTML_Element/Post.js";
+import { FormCreatePost } from "./HTML_Element/Layout/CreatePost/CratePost.js";
 
 async function loadPostItem(posts) {
   var root = document.querySelector("#ListPost");

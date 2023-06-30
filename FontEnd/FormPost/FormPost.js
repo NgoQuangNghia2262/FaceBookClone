@@ -5,14 +5,13 @@ import User from "../DTO/User.js";
 import Post, { PostController } from "../DTO/Post.js";
 import { HeaderLayout } from "../HTML_Element/Layout/Header/Header.js";
 import { WebContent_Center } from "../HTML_Element/Layout/WebContent/Center/WebContent_Center.js";
+import { PreLoadPost } from "../HTML_Element/Layout/Loader/PreLoadPost.js";
 
 var username = localStorage.getItem("username");
 async function loadPostItem(posts) {
-  var root = document.querySelector("#ListPost");
-  let mainWebContent_button = document.querySelector("#btn_XemThem");
-  mainWebContent_button.className = "displaynone";
-  let preload = document.querySelector("#ListPost_PreLoad");
-  preload.style.display = "block";
+  let root = document.querySelector("#ListPost");
+  let parent = root.parentElement;
+  parent.appendChild(PreLoadPost());
   for (let index = 0; index < posts.length; index++) {
     let post = new Post(posts[index]);
     const newElement = await finallyPost(post);
@@ -39,26 +38,19 @@ function LoadFriend(friends) {
 }
 let trang = 1;
 async function loadMorePosts(trang) {
+  let preLoad = root.querySelector("#ListPost_PreLoad");
   let posts = await PostController.getPost(trang);
-  if (!posts) {
+  if (!posts | preLoad) {
     return;
   }
-  loadPostItem(posts)
-    .then()
-    .catch()
-    .finally(() => {
-      let mainWebContent_button = document.querySelector("#btn_XemThem");
-      mainWebContent_button.className = "";
-      let preload = document.querySelector("#ListPost_PreLoad");
-      preload.style.display = "none";
-      trang++;
-    });
+  loadPostItem(posts).finally(() => {
+    let root = document.querySelector("#WebContent_Center");
+    let preLoad = root.querySelector("#ListPost_PreLoad");
+    root.removeChild(preLoad);
+    trang++;
+  });
 }
 async function main() {
-  let mainWebContent_button = document.querySelector("#btn_XemThem");
-  mainWebContent_button.addEventListener("click", function () {
-    loadMorePosts(trang);
-  });
   const item = await Promise.all([
     await FriendController.getListFriendbyUsername(username),
     await User.FindOne(username),
@@ -67,16 +59,11 @@ async function main() {
   let body = document.querySelector("body");
   body.appendChild(HeaderLayout(item[1]));
   LoadFriend(item[0]);
-  Load(item[1]);
-  //WebContent_Center(item[1]);
-  loadPostItem(item[2])
-    .then()
-    .catch()
-    .finally(() => {
-      let mainWebContent_button = document.querySelector("#btn_XemThem");
-      mainWebContent_button.className = "";
-      var preload = document.querySelector("#ListPost_PreLoad");
-      preload.style.display = "none";
-    });
+  await WebContent_Center(item[1]);
+  loadPostItem(item[2]).finally(() => {
+    let root = document.querySelector("#WebContent_Center");
+    let preLoad = root.querySelector("#ListPost_PreLoad");
+    root.removeChild(preLoad);
+  });
 }
 main();

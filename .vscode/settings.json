@@ -1,11 +1,10 @@
 {
   "liveServer.settings.AdvanceCustomBrowserCmdLine": "",
   "liveServer.settings.ignoreFiles": [
-    
-    "BackEnd/public/images/**",
+    //"BackEnd/public/images/**",
     ".vscode/**",
     "**/*.scss",
     "**/*.sass",
     "**/*.ts"
-  ],
+  ]
 }

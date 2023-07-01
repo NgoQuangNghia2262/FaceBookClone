@@ -307,20 +307,25 @@ export const CratePost = {
     return div;
   },
   button: () => {
-    const button = document.createElement("div");
-    button.id = "buttonCreatePost";
-    button.className = "nonactivate";
-    button.innerHTML = `<button type="button">Đăng</button>`;
-    button.style = `
+    const wrapButton = document.createElement("div");
+    wrapButton.id = "buttonCreatePost";
+    wrapButton.className = "nonactivate";
+    wrapButton.innerHTML = `<button type="button">Đăng</button>`;
+    wrapButton.style = `
       width: 100%;
       display: flex;
       justify-content: center;
       align-items: center;
     `;
-    button.addEventListener("click", async () => {
-      if (button.className === "activate") {
+    const button = wrapButton.querySelector("button");
+    button.addEventListener("click", async (event) => {
+      if (wrapButton.className === "activate") {
+        event.preventDefault();
         let body = document.querySelector("body");
         body.appendChild(CircleLoad());
+        let textareaFormCreatePost = document.querySelector(
+          ".FormCreatePost_Content textarea"
+        );
         let FormCreatePost_Content_UpLoad_Input = document.querySelector(
           ".FormCreatePost_Content_UpLoad input"
         );
@@ -333,17 +338,13 @@ export const CratePost = {
             body: formData,
           }
         );
-        let textareaFormCreatePost = document.querySelector(
-          ".FormCreatePost_Content textarea"
-        );
         const data = {
           UserID: localStorage.getItem("username"),
           pathimg: pathimg,
           content: textareaFormCreatePost.value,
           category: "Post",
         };
-        console.log(data);
-        debugger;
+        //---------------------------------------------------------------------------------------------------------
         await fetchData("http://localhost:8000/data/api/post/createpost", {
           method: "POST",
           headers: {

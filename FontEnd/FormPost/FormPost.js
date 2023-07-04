@@ -38,7 +38,7 @@ function LoadFriend(friends) {
 }
 let trang = 1;
 async function loadMorePosts(trang) {
-  let preLoad = root.querySelector("#ListPost_PreLoad");
+  let preLoad = document.querySelector("#ListPost_PreLoad");
   let posts = await PostController.getPost(trang);
   if (!posts | preLoad) {
     return;
@@ -47,9 +47,17 @@ async function loadMorePosts(trang) {
     let root = document.querySelector("#WebContent_Center");
     let preLoad = root.querySelector("#ListPost_PreLoad");
     root.removeChild(preLoad);
-    trang++;
   });
 }
+window.addEventListener("scroll", async function () {
+  if (window.innerHeight + window.pageYOffset >= document.body.offsetHeight) {
+    let preLoad = document.querySelector("#ListPost_PreLoad");
+    if (!preLoad) {
+      loadMorePosts(trang);
+      trang++;
+    }
+  }
+});
 async function main() {
   const item = await Promise.all([
     await FriendController.getListFriendbyUsername(username),

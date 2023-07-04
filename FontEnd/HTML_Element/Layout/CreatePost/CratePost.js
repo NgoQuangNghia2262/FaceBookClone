@@ -358,6 +358,6 @@ export const CratePost = {
         body.removeChild(overlay);
       }
     });
-    return button;
+    return wrapButton;
   },
 };
